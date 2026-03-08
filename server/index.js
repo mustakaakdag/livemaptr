@@ -92,8 +92,7 @@ setInterval(async () => {
   } catch(e) {
     logger.warn('GDELT interval hata: ' + e.message);
   }
-}, 10 * 60 * 1000);, 15 * 60 * 1000);
-}
+}, 10 * 60 * 1000);
 
 // NewsAPI periyodik döngüsü — her 5 dakikada rotasyonlu sorgu
 const NEWSAPI_INTERVAL = parseInt(process.env.NEWSAPI_REFRESH_INTERVAL, 10) || 300000;
