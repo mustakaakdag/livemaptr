@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline'; img-src * data: blob:; connect-src *;"/>
+<title>LiveMapTR — Canlı Global Çatışma Takip Haritası</title>
+<meta name="description" content="Dünya genelinde aktif çatışmaları, savaşları ve kriz bölgelerini gerçek zamanlı takip edin. Füze saldırıları, drone operasyonları ve askeri gelişmeleri canlı haritada izleyin."/>
+<meta name="keywords" content="canlı çatışma haritası, savaş takip, Gaza, Ukrayna, İran, dünya savaşları, live war map, conflict tracker"/>
+<meta name="author" content="LiveMapTR"/>
+<meta property="og:title" content="LiveMapTR — Canlı Global Çatışma Haritası"/>
+<meta property="og:description" content="Gaza, Ukrayna, İran-İsrail ve daha fazlasını gerçek zamanlı takip edin."/>
+<meta property="og:url" content="https://livemaptr.com"/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://livemaptr.com/og-image.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="LiveMapTR — Canlı Çatışma Haritası"/>
+<meta name="twitter:description" content="Dünya genelinde aktif savaş ve çatışmaları canlı takip et."/>
+<meta name="theme-color" content="#030508"/>
+<link rel="canonical" href="https://livemaptr.com"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
+<link rel="stylesheet" href="/lib/leaflet/leaflet.css" onerror="this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'"/>
+<link rel="stylesheet" href="/lib/markercluster/MarkerCluster.Default.css" onerror="this.href='https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css'"/>
+<link rel="stylesheet" href="/lib/markercluster/MarkerCluster.css" onerror="this.href='https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css'"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#030508;--bg1:#060a10;--bg2:#09101a;--bg3:#0c1520;--bg4:#101c28;
+  --border:#0f1f30;--border2:#162840;--border3:#1e3550;
+  --txt:#b8cce4;--txt2:#6b8aaa;--txt3:#3a5470;--txt4:#1e3448;
+  --red:#ef4444;--red2:#dc2626;
+  --orange:#f97316;--amber:#f59e0b;
+  --green:#22c55e;--blue:#3b82f6;--cyan:#0ea5e9;
+  --font:'Barlow',system-ui,sans-serif;
+  --mono:'Share Tech Mono',monospace;
+  --cond:'Barlow Condensed',sans-serif;
+  --hdr:48px;--r:4px;
+}
+html{font-size:13px;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);background:var(--bg);color:var(--txt);overflow:hidden;height:100vh;width:100vw}
+a{color:var(--cyan);text-decoration:none}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;outline:none;color:inherit}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-thumb{background:var(--border3);border-radius:2px}
+*{scrollbar-width:thin;scrollbar-color:var(--border3) transparent}
+body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px)}
+
+/* HEADER */
+#hdr{position:fixed;top:0;left:0;right:0;z-index:3000;height:var(--hdr);display:flex;align-items:stretch;background:rgba(3,5,8,.99);border-bottom:1px solid var(--border2)}
+.hs{display:flex;align-items:center;padding:0 14px;border-right:1px solid var(--border)}
+.logo-name{font-family:var(--cond);font-size:17px;font-weight:800;letter-spacing:1px;color:var(--txt);text-transform:uppercase}
+.logo-sub{font-family:var(--mono);font-size:8px;color:var(--txt3);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+.live-pill{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:#fff;background:var(--red2);padding:3px 7px;border-radius:2px;animation:bpill 2s ease-in-out infinite;margin-right:10px}
+@keyframes bpill{0%,100%{opacity:1}50%{opacity:.5}}
+
+.hdr-chips{display:flex;align-items:stretch;flex:1}
+.chip{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 16px;border-right:1px solid var(--border);min-width:90px;cursor:default}
+.chip-val{font-family:var(--mono);font-size:20px;line-height:1}
+.chip-lbl{font-family:var(--cond);font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--txt3);margin-top:2px}
+.cv-red{color:var(--red)}.cv-orange{color:var(--orange)}.cv-amber{color:var(--amber)}.cv-green{color:var(--green)}.cv-txt{color:var(--txt)}
+
+.ticker-wrap{flex:1;overflow:hidden;display:flex;align-items:center;border-right:1px solid var(--border)}
+.tick-lbl{flex-shrink:0;font-family:var(--mono);font-size:8px;letter-spacing:2px;color:var(--red);padding:0 10px;border-right:1px solid var(--border);height:100%;display:flex;align-items:center}
+.tick-inner{flex:1;overflow:hidden;height:100%;display:flex;align-items:center}
+.tick-track{white-space:nowrap;font-family:var(--mono);font-size:11px;color:var(--txt2);animation:tick 65s linear infinite}
+@keyframes tick{0%{transform:translateX(100vw)}100%{transform:translateX(-300%)}}
+.tick-item{padding:0 22px;display:inline-flex;align-items:center;gap:6px}
+
+.hdr-right{display:flex;align-items:center;gap:10px;padding:0 14px}
+.hdr-clock{font-family:var(--mono);font-size:13px;color:var(--txt2);letter-spacing:1px}
+.conn-wrap{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;color:var(--txt3)}
+.cdot{width:6px;height:6px;border-radius:50%;background:var(--txt4);transition:.3s}
+.cdot.ok{background:var(--green);box-shadow:0 0 5px var(--green);animation:cpulse 3s infinite}
+.cdot.err{background:var(--red)}
+@keyframes cpulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hdr-btn{font-family:var(--mono);font-size:10px;color:var(--txt3);padding:5px 9px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg2);transition:.12s;letter-spacing:.5px}
+.hdr-btn:hover{color:var(--txt);border-color:var(--border3)}
+
+/* LAYOUT */
+#root{margin-top:var(--hdr);height:calc(100vh - var(--hdr));display:flex;flex-direction:column;overflow:hidden}
+#main{flex:1;display:flex;overflow:hidden;min-height:0}
+
+/* LEFT */
+#pl{width:295px;flex-shrink:0;height:100%;display:flex;flex-direction:column;background:var(--bg1);border-right:1px solid var(--border2);overflow:hidden;transition:width .2s}
+#pl.collapsed{width:0;border-right:none;overflow:hidden}
+.pl-hdr{display:flex;align-items:center;justify-content:space-between;padding:7px 11px;border-bottom:1px solid var(--border2);background:var(--bg);flex-shrink:0}
+.pl-title{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--txt3)}
+.pl-tabs{display:flex;gap:1px;padding:5px 7px;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0}
+.pltab{font-family:var(--mono);font-size:10px;color:var(--txt3);padding:4px 9px;border-radius:3px;border:1px solid transparent;transition:.12s}
+.pltab:hover{color:var(--txt2);background:rgba(255,255,255,.04)}
+.pltab.on{color:var(--txt);background:var(--bg3);border-color:var(--border2)}
+#cf-list{flex:1;overflow-y:auto;padding:5px}
+
+.cfc{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:9px 10px;margin-bottom:4px;cursor:pointer;transition:.12s;position:relative;overflow:hidden}
+.cfc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--border3)}
+.cfc:hover{background:var(--bg4);border-color:var(--border2)}
+.cfc.sel{border-color:var(--border3);background:var(--bg4)}
+.cfc.sel::before,.cfc.int-kritik::before{background:var(--red);box-shadow:0 0 8px var(--red)}
+.cfc.int-yuksek::before{background:var(--orange)}
+.cfc.int-orta::before{background:var(--amber)}
+.cfc.int-dusuk::before{background:var(--green)}
+.cf-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:5px;gap:6px}
+.cf-fn{display:flex;align-items:center;gap:7px}
+.cf-flag{font-size:16px;flex-shrink:0}
+.cf-nm{font-family:var(--cond);font-size:13px;font-weight:700;color:var(--txt);line-height:1.2}
+.cf-rg{font-size:10px;color:var(--txt3);margin-top:1px}
+.cf-sc{font-family:var(--mono);font-size:18px;color:var(--txt2);flex-shrink:0;line-height:1}
+.cf-bot{display:flex;gap:4px;flex-wrap:wrap}
+.cbadge{font-family:var(--mono);font-size:9px;letter-spacing:.3px;padding:2px 6px;border-radius:2px}
+.st-aktif{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.st-donmus{background:rgba(59,130,246,.1);color:#93c5fd;border:1px solid rgba(59,130,246,.2)}
+.st-izleme{background:rgba(245,158,11,.1);color:#fde68a;border:1px solid rgba(245,158,11,.2)}
+.in-kritik{background:rgba(239,68,68,.1);color:var(--red)}
+.in-yuksek{background:rgba(249,115,22,.1);color:var(--orange)}
+.in-orta{background:rgba(245,158,11,.1);color:var(--amber)}
+.in-dusuk{background:rgba(34,197,94,.1);color:var(--green)}
+.cf-bar{height:2px;background:var(--border);border-radius:1px;margin-top:6px;overflow:hidden}
+.cf-fill{height:100%;border-radius:1px;transition:width .4s}
+
+/* MAP */
+#map-area{flex:1;position:relative;overflow:hidden;background:#020407}
+#map{width:100%;height:100%;background:#020407!important}
+.mo-tl{position:absolute;top:10px;left:10px;z-index:900;display:flex;flex-direction:column;gap:5px}
+.mfrow{display:flex;gap:2px;background:rgba(3,5,8,.95);border:1px solid var(--border2);border-radius:var(--r);padding:3px;backdrop-filter:blur(12px)}
+.mfb{font-family:var(--mono);font-size:10px;color:var(--txt3);padding:4px 9px;border-radius:3px;transition:.12s;white-space:nowrap}
+.mfb:hover{color:var(--txt2);background:rgba(255,255,255,.05)}
+.mfb.on{color:#fff;background:rgba(239,68,68,.18);border:1px solid rgba(239,68,68,.3)}
+.mo-tr{position:absolute;top:10px;right:10px;z-index:900;display:flex;flex-direction:column;gap:5px}
+.msc{background:rgba(3,5,8,.96);border:1px solid var(--border2);border-radius:var(--r);padding:7px 11px;backdrop-filter:blur(12px);min-width:105px}
+.ms-lbl{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:3px}
+.ms-val{font-family:var(--mono);font-size:22px;color:var(--txt);line-height:1}
+.ms-val.red{color:var(--red)}.ms-val.green{color:var(--green)}
+.ms-sub{font-family:var(--mono);font-size:9px;color:var(--txt4);margin-top:1px}
+.mo-bl{position:absolute;bottom:50px;left:10px;z-index:900;background:rgba(3,5,8,.93);border:1px solid var(--border2);border-radius:var(--r);padding:8px 11px;backdrop-filter:blur(8px);pointer-events:none}
+.leg-t{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:5px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.leg-r{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;color:var(--txt2);margin-bottom:4px}
+.ldot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* RIGHT */
+#pr{width:315px;flex-shrink:0;height:100%;display:flex;flex-direction:column;background:var(--bg1);border-left:1px solid var(--border2);overflow:hidden;transition:width .2s}
+#pr.collapsed{width:0;border-left:none;overflow:hidden}
+#d-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--txt4);padding:30px;text-align:center}
+.de-icon{font-size:28px;opacity:.35}
+.de-txt{font-family:var(--mono);font-size:10px;line-height:1.6;letter-spacing:.5px;text-transform:uppercase}
+#d-content{display:none;flex-direction:column;height:100%;overflow:hidden}
+#d-content.show{display:flex}
+.dc-hdr{padding:11px 13px;border-bottom:1px solid var(--border2);flex-shrink:0}
+.dc-fn{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.dc-flag{font-size:22px}
+.dc-title{font-family:var(--cond);font-size:15px;font-weight:800;color:var(--txt);text-transform:uppercase;letter-spacing:.5px}
+.dc-rg{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.3px}
+.dc-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.rm{padding:9px 13px;border-bottom:1px solid var(--border);flex-shrink:0}
+.rm-lbl{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.rm-t{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--txt3)}
+.rm-s{font-family:var(--mono);font-size:18px;color:var(--red)}
+.rm-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.rm-fill{height:100%;border-radius:2px;transition:width .6s}
+.dc-body{flex:1;overflow-y:auto}
+.dcs{padding:9px 13px;border-bottom:1px solid var(--border)}
+.dcs-t{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:6px}
+.pty{display:flex;align-items:center;gap:6px;margin-bottom:4px;padding:5px 7px;background:var(--bg3);border-radius:3px}
+.pty-flag{font-size:13px;flex-shrink:0}
+.pty-nm{font-size:11px;color:var(--txt);flex:1}
+.pty-side{font-family:var(--mono);font-size:9px;padding:2px 5px;border-radius:2px}
+.cas-g{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.cas-c{background:var(--bg3);border-radius:3px;padding:7px 8px;border:1px solid var(--border)}
+.cas-l{font-family:var(--mono);font-size:8px;letter-spacing:.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:2px}
+.cas-v{font-family:var(--mono);font-size:12px;color:var(--red)}
+.dc-sum{font-size:11.5px;color:var(--txt2);line-height:1.6;font-weight:300}
+.hs-r{display:flex;align-items:center;gap:6px;padding:5px 7px;background:var(--bg3);border-radius:3px;margin-bottom:3px;cursor:pointer;transition:.12s}
+.hs-r:hover{background:var(--bg4)}
+.hs-icon{font-size:13px;flex-shrink:0}
+.hs-nm{font-size:11px;color:var(--txt);flex:1}
+.hs-sv{font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:2px}
+.sv-kritik{background:rgba(239,68,68,.15);color:var(--red)}
+.sv-yuksek{background:rgba(249,115,22,.12);color:var(--orange)}
+.sv-orta{background:rgba(245,158,11,.1);color:var(--amber)}
+.sv-dusuk{background:rgba(34,197,94,.1);color:var(--green)}
+.tags-w{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-family:var(--mono);font-size:9px;color:var(--txt3);background:var(--bg3);border:1px solid var(--border);padding:2px 6px;border-radius:2px}
+.src-r{font-family:var(--mono);font-size:10px;color:var(--txt3);padding:2px 0}
+
+/* BOTTOM FEED */
+#feed{height:155px;flex-shrink:0;border-top:1px solid var(--border2);display:flex;flex-direction:column;background:var(--bg);transition:height .2s}
+#feed.collapsed{height:32px}
+.fb-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 13px;height:32px;border-bottom:1px solid var(--border);flex-shrink:0;cursor:pointer;user-select:none}
+.fb-title{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--txt3)}
+.fb-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:bpill 1.5s infinite}
+.fb-r{display:flex;align-items:center;gap:7px}
+.fb-cnt{font-family:var(--mono);font-size:10px;color:var(--txt3);background:var(--bg2);border:1px solid var(--border);padding:1px 7px;border-radius:2px}
+.fb-tog{font-family:var(--mono);font-size:10px;color:var(--txt3)}
+#feed-list{flex:1;overflow-x:auto;overflow-y:hidden;display:flex;gap:5px;padding:7px 10px;align-items:flex-start}
+.evc{flex-shrink:0;width:195px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:7px 9px;cursor:pointer;transition:.12s;border-left:2px solid var(--border3)}
+.evc:hover{background:var(--bg3);border-color:var(--border3)}
+.evc.sv-kritik{border-left-color:var(--red)}
+.evc.sv-yuksek{border-left-color:var(--orange)}
+.evc.sv-orta{border-left-color:var(--amber)}
+.evc.sv-dusuk{border-left-color:var(--green)}
+.ev-top{display:flex;align-items:center;gap:4px;margin-bottom:3px}
+.ev-ico{font-size:12px;flex-shrink:0}
+.ev-rg{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:.3px;text-transform:uppercase;flex:1}
+.ev-t{font-family:var(--mono);font-size:10px;color:var(--txt4)}
+.ev-txt{font-size:11px;color:var(--txt2);line-height:1.4}
+
+/* MARKERS */
+.cm{display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;transition:transform .15s;border:1.5px solid rgba(255,255,255,.06);box-shadow:0 2px 12px rgba(0,0,0,.8)}
+.cm:hover{transform:scale(1.35)!important;z-index:9999!important}
+.cm.kritik{background:radial-gradient(circle at 35% 35%,#dc2626,#7f1d1d);border-color:rgba(220,38,38,.5);box-shadow:0 0 20px rgba(220,38,38,.8);animation:pk 2s infinite}
+.cm.yuksek{background:radial-gradient(circle at 35% 35%,#ea580c,#7c2d12);border-color:rgba(234,88,12,.4);box-shadow:0 0 14px rgba(249,115,22,.6);animation:po 2.8s infinite}
+.cm.orta{background:radial-gradient(circle at 35% 35%,#ca8a04,#713f12);border-color:rgba(202,138,4,.4)}
+.cm.dusuk{background:radial-gradient(circle at 35% 35%,#15803d,#052e16);border-color:rgba(21,128,61,.4)}
+.cm.haber{background:radial-gradient(circle at 35% 35%,#1d4ed8,#1e3a8a);border-color:rgba(29,78,216,.4)}
+.cm.brk{background:radial-gradient(circle at 35% 35%,#dc2626,#7f1d1d);border-color:rgba(220,38,38,.6);box-shadow:0 0 18px rgba(220,38,38,.9);animation:pk 1.6s infinite}
+.cm-icon{font-size:11px;line-height:1;pointer-events:none}
+@keyframes pk{0%{box-shadow:0 0 0 0 rgba(220,38,38,.9)}60%{box-shadow:0 0 0 16px rgba(220,38,38,0)}100%{box-shadow:0 0 0 0 rgba(220,38,38,0)}}
+@keyframes po{0%{box-shadow:0 0 0 0 rgba(249,115,22,.8)}60%{box-shadow:0 0 0 12px rgba(249,115,22,0)}100%{box-shadow:0 0 0 0 rgba(249,115,22,0)}}
+
+/* CLUSTER */
+.marker-cluster-small{background:rgba(29,78,216,.15)!important;border:1.5px solid rgba(29,78,216,.5)!important}
+.marker-cluster-small div{background:rgba(29,78,216,.9)!important;width:26px!important;height:26px!important;margin:5px!important;border-radius:50%!important;font-family:var(--mono)!important;font-size:10px!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.marker-cluster-medium{background:rgba(249,115,22,.15)!important;border:1.5px solid rgba(249,115,22,.5)!important}
+.marker-cluster-medium div{background:rgba(249,115,22,.9)!important;width:26px!important;height:26px!important;margin:5px!important;border-radius:50%!important;font-family:var(--mono)!important;font-size:10px!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.marker-cluster-large{background:rgba(220,38,38,.15)!important;border:1.5px solid rgba(220,38,38,.5)!important}
+.marker-cluster-large div{background:rgba(220,38,38,.9)!important;width:26px!important;height:26px!important;margin:5px!important;border-radius:50%!important;font-family:var(--mono)!important;font-size:10px!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important}
+
+/* LEAFLET */
+.leaflet-tile-pane{filter:brightness(.33) saturate(.5) hue-rotate(195deg)}
+.leaflet-container{background:#020407!important;font-family:var(--font)!important}
+.leaflet-control-zoom{border:1px solid var(--border2)!important;border-radius:var(--r)!important;overflow:hidden;box-shadow:none!important}
+.leaflet-control-zoom a{background:rgba(3,5,8,.97)!important;color:var(--txt2)!important;border-bottom:1px solid var(--border)!important;width:26px!important;height:26px!important;line-height:26px!important;font-size:15px!important}
+.leaflet-control-zoom a:hover{background:var(--bg4)!important;color:var(--txt)!important}
+.leaflet-control-attribution{font-size:9px!important;background:rgba(2,4,7,.7)!important;color:var(--txt4)!important}
+.leaflet-popup-content-wrapper{background:var(--bg2)!important;border:1px solid var(--border2)!important;border-radius:var(--r)!important;box-shadow:0 8px 40px rgba(0,0,0,.95)!important;padding:0!important;color:var(--txt)!important}
+.leaflet-popup-content{margin:0!important;min-width:220px}
+.leaflet-popup-tip-container{display:none!important}
+.leaflet-popup-close-button{color:var(--txt3)!important;top:5px!important;right:5px!important;font-size:14px!important}
+.mpop-hdr{padding:8px 11px 6px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.mpop-type{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:2px;border:1px solid}
+.mpop-body{padding:8px 11px}
+.mpop-title{font-family:var(--cond);font-size:13px;font-weight:700;color:var(--txt);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
+.mpop-desc{font-size:11px;color:var(--txt2);line-height:1.5}
+.mpop-meta{font-family:var(--mono);font-size:10px;color:var(--txt3);margin-top:4px}
+
+/* TOAST */
+#toasts{position:fixed;top:56px;right:12px;z-index:6000;display:flex;flex-direction:column;gap:5px;pointer-events:none}
+.toast{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:8px 12px;font-family:var(--mono);font-size:11px;color:var(--txt);max-width:240px;box-shadow:0 4px 20px rgba(0,0,0,.8);animation:tin .2s ease;pointer-events:all;display:flex;align-items:center;gap:7px;letter-spacing:.3px}
+.toast.red{border-color:rgba(220,38,38,.35);background:rgba(220,38,38,.07)}
+.toast.green{border-color:rgba(34,197,94,.3)}
+@keyframes tin{from{opacity:0;transform:translateX(15px)}to{opacity:1;transform:none}}
+
+/* LOADING */
+.ld{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:30px;color:var(--txt4);font-family:var(--mono);font-size:10px;letter-spacing:1px;text-align:center}
+.ldspin{width:16px;height:16px;border:1.5px solid var(--border3);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══ ALARM KARTI ═══ */
+#alarm-wrap{position:fixed;top:60px;right:14px;z-index:7000;display:flex;flex-direction:column;gap:6px;pointer-events:none;width:290px}
+.alarm-card{
+  pointer-events:all;background:rgba(4,6,10,.98);border:1px solid rgba(220,38,38,.5);
+  border-radius:var(--r);padding:11px 13px;
+  box-shadow:0 0 30px rgba(220,38,38,.25),0 8px 30px rgba(0,0,0,.9);
+  animation:alm-in .35s cubic-bezier(.175,.885,.32,1.275);
+  position:relative;overflow:hidden;
+}
+.alarm-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red2);box-shadow:0 0 10px var(--red)}
+@keyframes alm-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+@keyframes alm-out{to{opacity:0;transform:translateX(20px)}}
+.alm-top{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.alm-pill{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:#fff;background:var(--red2);padding:2px 6px;border-radius:2px;animation:bpill 1s infinite}
+.alm-time{font-family:var(--mono);font-size:10px;color:var(--txt3);margin-left:auto}
+.alm-icon{font-size:18px;flex-shrink:0}
+.alm-title{font-family:var(--cond);font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.alm-loc{font-family:var(--mono);font-size:10px;color:var(--txt2)}
+.alm-sev{font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:2px;margin-left:6px}
+.alm-sev.kritik{background:rgba(220,38,38,.2);color:var(--red)}
+.alm-sev.yuksek{background:rgba(249,115,22,.15);color:var(--orange)}
+.alm-zoom{font-family:var(--mono);font-size:9px;color:var(--cyan);cursor:pointer;margin-top:5px;display:inline-block;border-bottom:1px solid rgba(14,165,233,.3)}
+.alm-zoom:hover{color:#fff}
+.alm-prog{height:2px;background:var(--border);border-radius:1px;margin-top:7px;overflow:hidden}
+.alm-prog-fill{height:100%;background:var(--red2);border-radius:1px;transition:width linear}
+
+/* ═══ RISK DELTA (▲▼) ═══ */
+.cf-delta{font-family:var(--mono);font-size:11px;margin-left:3px;transition:all .3s}
+.cf-delta.up{color:var(--red);animation:delta-flash-r .6s ease}
+.cf-delta.dn{color:var(--green);animation:delta-flash-g .6s ease}
+@keyframes delta-flash-r{0%,100%{opacity:1}50%{opacity:.3;transform:scale(1.4)}}
+@keyframes delta-flash-g{0%,100%{opacity:1}50%{opacity:.3;transform:scale(1.4)}}
+.cf-sc-wrap{display:flex;align-items:center;flex-direction:column;align-items:flex-end;gap:1px}
+
+/* ═══ ANALİST YORUMU ═══ */
+#analyst-wrap{border-bottom:1px solid var(--border);flex-shrink:0;padding:0}
+.analyst-hdr{display:flex;align-items:center;gap:7px;padding:7px 13px;border-bottom:1px solid var(--border)}
+.analyst-badge{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;color:var(--amber);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);padding:2px 6px;border-radius:2px}
+.analyst-time{font-family:var(--mono);font-size:10px;color:var(--txt3);margin-left:auto}
+.analyst-body{padding:8px 13px;min-height:54px;position:relative}
+.analyst-txt{font-size:11.5px;color:var(--txt2);line-height:1.6;font-style:italic;font-weight:300}
+.analyst-cursor{display:inline-block;width:7px;height:12px;background:var(--amber);margin-left:2px;vertical-align:middle;animation:cur-blink .8s step-end infinite}
+@keyframes cur-blink{0%,100%{opacity:1}50%{opacity:0}}
+.analyst-typing{display:flex;align-items:center;gap:4px;padding:6px 13px}
+.analyst-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);animation:adot .9s ease-in-out infinite}
+.analyst-dot:nth-child(2){animation-delay:.2s}
+.analyst-dot:nth-child(3){animation-delay:.4s}
+@keyframes adot{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+
+/* ═══ IMPACT MARKER (füze/drone) ═══ */
+.impact-ring{
+  position:absolute;border-radius:50%;border:2px solid var(--red);
+  animation:impact-expand 1.2s ease-out forwards;
+  pointer-events:none;transform:translate(-50%,-50%);
+}
+@keyframes impact-expand{
+  0%{width:0;height:0;opacity:1;border-color:var(--red);box-shadow:0 0 20px rgba(220,38,38,.9)}
+  60%{border-color:var(--orange)}
+  100%{width:80px;height:80px;opacity:0;border-color:var(--amber)}
+}
+.impact-dot{
+  width:10px;height:10px;background:var(--red);border-radius:50%;
+  box-shadow:0 0 16px rgba(220,38,38,1);
+  animation:impact-dot 2s ease forwards;
+  pointer-events:none;transform:translate(-50%,-50%);position:absolute;
+}
+@keyframes impact-dot{0%{opacity:1;transform:translate(-50%,-50%) scale(1.5)}70%{opacity:.8}100%{opacity:0;transform:translate(-50%,-50%) scale(.3)}}
+
+/* ═══ SCREEN FLASH ═══ */
+#screen-flash{position:fixed;inset:0;z-index:9990;pointer-events:none;background:rgba(220,38,38,0);transition:background .05s}
+#screen-flash.flash{background:rgba(220,38,38,.08)}
+
+/* ═══ SES TOGGLE ═══ */
+#sound-btn{font-family:var(--mono);font-size:10px;color:var(--txt3);padding:5px 9px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg2);transition:.12s;letter-spacing:.5px;cursor:pointer}
+#sound-btn.on{color:var(--amber);border-color:rgba(245,158,11,.4)}
+#sound-btn:hover{color:var(--txt)}
+
+/* ═══ IMPACT LOG ═══ */
+#impact-log{position:absolute;bottom:55px;right:12px;z-index:900;display:flex;flex-direction:column;gap:4px;pointer-events:none;max-width:220px}
+.ilog-item{background:rgba(3,5,8,.95);border:1px solid rgba(220,38,38,.3);border-radius:3px;padding:5px 9px;font-family:var(--mono);font-size:10px;color:var(--txt2);display:flex;align-items:center;gap:6px;animation:ilog-in .2s ease;border-left:2px solid var(--red)}
+@keyframes ilog-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ilog-icon{font-size:13px;flex-shrink:0}
+.ilog-txt{flex:1;line-height:1.4}
+.ilog-t{color:var(--txt4);font-size:9px;display:block;margin-top:1px}
+
+/* ═══ NEWSAPI HABER PANELİ ═══ */
+#na-panel{position:fixed;bottom:0;left:295px;right:315px;z-index:2500;
+  background:rgba(3,5,8,.98);border-top:1px solid var(--border2);
+  transition:height .25s ease, left .2s, right .2s;
+  height:38px;overflow:hidden;}
+#na-panel.open{height:220px;}
+#na-panel.pl-collapsed{left:0;}
+#na-panel.pr-collapsed{right:0;}
+.nap-hdr{height:38px;display:flex;align-items:center;gap:10px;padding:0 14px;cursor:pointer;border-bottom:1px solid var(--border);flex-shrink:0;}
+.nap-pill{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:#fff;background:#1d4ed8;padding:2px 6px;border-radius:2px;}
+.nap-title{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:1px;flex:1;}
+.nap-count{font-family:var(--mono);font-size:11px;color:var(--cyan);}
+.nap-tog{font-family:var(--mono);font-size:10px;color:var(--txt4);}
+.nap-body{height:182px;display:flex;gap:0;overflow-x:auto;overflow-y:hidden;padding:8px 10px;gap:8px;}
+.nap-body::-webkit-scrollbar{height:3px;}
+
+.na-card{flex-shrink:0;width:220px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:var(--r);padding:9px 10px;display:flex;flex-direction:column;gap:5px;
+  cursor:pointer;transition:.12s;position:relative;overflow:hidden;}
+.na-card:hover{background:var(--bg4);border-color:var(--border2);}
+.na-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;}
+.na-card.sev-critical::before{background:var(--red);box-shadow:0 0 8px var(--red);}
+.na-card.sev-high::before{background:var(--orange);}
+.na-card.sev-medium::before{background:var(--amber);}
+.na-card.sev-low::before{background:var(--border3);}
+.na-top{display:flex;align-items:center;gap:5px;}
+.na-src{font-family:var(--mono);font-size:9px;color:var(--txt3);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.na-time{font-family:var(--mono);font-size:9px;color:var(--txt4);}
+.na-brk{font-family:var(--mono);font-size:7px;letter-spacing:1.5px;color:var(--red);background:rgba(239,68,68,.1);padding:1px 4px;border-radius:2px;}
+.na-title{font-size:11px;color:var(--txt);line-height:1.4;font-weight:500;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;}
+.na-bot{display:flex;align-items:center;gap:5px;margin-top:auto;}
+.na-cat{font-family:var(--mono);font-size:8px;padding:1px 5px;border-radius:2px;background:rgba(59,130,246,.1);color:#93c5fd;border:1px solid rgba(59,130,246,.2);}
+.na-conf{font-family:var(--mono);font-size:8px;color:var(--txt3);}
+.na-link{font-family:var(--mono);font-size:9px;color:var(--cyan);margin-left:auto;}
+.na-empty{display:flex;align-items:center;justify-content:center;height:100%;color:var(--txt4);font-family:var(--mono);font-size:10px;letter-spacing:1px;}
+.na-loading{display:flex;align-items:center;gap:8px;height:100%;padding:0 20px;color:var(--txt4);font-family:var(--mono);font-size:10px;}
+
+/* ═══════════════════════════════════════════
+   MOBİL RESPONSIVE — LiveMapTR v3.8
+   Breakpoints: 768px tablet, 480px phone
+═══════════════════════════════════════════ */
+
+/* MOBİL NAV BAR (sadece mobilde görünür) */
+#mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:4000;
+  background:rgba(3,5,8,.98);border-top:1px solid var(--border2);
+  height:56px;align-items:stretch;}
+.mnb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;cursor:pointer;border:none;background:none;color:var(--txt3);
+  font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;
+  transition:.12s;border-right:1px solid var(--border);}
+.mnb:last-child{border-right:none}
+.mnb:hover,.mnb.on{color:var(--txt);background:rgba(255,255,255,.04)}
+.mnb.on{color:var(--red)}
+.mnb-icon{font-size:18px;line-height:1}
+.mob-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--red);
+  color:#fff;font-family:var(--mono);font-size:8px;padding:1px 4px;border-radius:8px;min-width:16px;text-align:center}
+
+@media (max-width: 768px) {
+  /* Header sadeleştir */
+  :root{--hdr:44px}
+  .hdr-chips{display:none}
+  .ticker-wrap{display:none}
+  #sound-btn{display:none}
+  .logo-sub{display:none}
+  .hdr-clock{font-size:11px}
+  .conn-wrap span#ctxt{display:none}
+  .live-pill{font-size:7px;padding:2px 5px}
+  .logo-name{font-size:14px}
+
+  /* Layout: tek sütun, sekme tabanlı */
+  #main{position:relative;overflow:hidden}
+  #pl{position:absolute;inset:0;z-index:100;width:100%!important;
+    transform:translateX(-100%);transition:transform .25s ease;
+    border-right:none;}
+  #pl.mob-show{transform:translateX(0)}
+  #pr{position:absolute;inset:0;z-index:100;width:100%!important;
+    transform:translateX(100%);transition:transform .25s ease;
+    border-left:none;}
+  #pr.mob-show{transform:translateX(0)}
+  #map-area{position:absolute;inset:0;z-index:50}
+
+  /* Alt navigasyon göster */
+  #mob-nav{display:flex}
+  #root{margin-bottom:56px}
+
+  /* Feed gizle mobilde (nav'da erişilir) */
+  #feed{display:none}
+  #na-panel{display:none}
+
+  /* Alarm kartları mobil */
+  #alarm-wrap{width:calc(100vw - 24px);top:52px;right:12px}
+  .alarm-card{max-width:100%}
+
+  /* Toast mobil */
+  #toasts{top:52px;right:8px;left:8px}
+  .toast{max-width:100%}
+
+  /* Harita kontrolleri mobil */
+  .mo-tl{top:8px;left:8px}
+  .mo-tr{top:8px;right:8px}
+  .mfrow{flex-wrap:wrap}
+  .mfb{font-size:9px;padding:3px 7px}
+  .mo-bl{display:none}
+  .msc{min-width:80px;padding:5px 8px}
+  .ms-val{font-size:16px}
+
+  /* Çatışma listesi mobil */
+  .cf-nm{font-size:12px}
+  .cf-sc{font-size:16px}
+  #cf-list{padding:6px}
+
+  /* Detail panel mobil */
+  .dc-title{font-size:13px}
+  #d-content.show{display:flex}
+
+  /* Paylaş butonu mobil */
+  #share-btn{display:flex}
+}
+
+@media (max-width: 480px) {
+  :root{--hdr:40px}
+  .logo-name{font-size:13px}
+  .live-pill{display:none}
+  .msc{display:none}
+  .mo-tr{display:none}
+  .alarm-card{padding:9px 11px}
+  .alm-title{font-size:12px}
+}
+
+/* Tablet: sidebar tek taraf */
+@media (min-width:769px) and (max-width:1024px){
+  #pl{width:240px}
+  #pr{width:260px}
+  .hdr-chips{display:none}
+  .chip:nth-child(n+3){display:none}
+}
+
+/* Paylaş butonu — masaüstünde de görünür */
+#share-btn{
+  font-family:var(--mono);font-size:10px;color:var(--txt3);
+  padding:5px 9px;border:1px solid var(--border2);border-radius:var(--r);
+  background:var(--bg2);transition:.12s;letter-spacing:.5px;cursor:pointer;
+  align-items:center;gap:5px;display:flex;
+}
+#share-btn:hover{color:var(--txt);border-color:var(--cyan);color:var(--cyan)}
+
+/* Paylaş modal */
+#share-modal{display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.8);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:20px;}
+#share-modal.open{display:flex}
+.sm-box{background:var(--bg2);border:1px solid var(--border2);border-radius:6px;
+  width:100%;max-width:360px;overflow:hidden;}
+.sm-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;border-bottom:1px solid var(--border);}
+.sm-title{font-family:var(--cond);font-size:14px;font-weight:700;color:var(--txt);text-transform:uppercase;letter-spacing:.5px}
+.sm-close{font-size:18px;color:var(--txt3);cursor:pointer;background:none;border:none;padding:0 4px}
+.sm-body{padding:16px}
+.sm-row{display:flex;gap:8px;margin-bottom:10px}
+.sm-btn{flex:1;padding:10px 8px;border-radius:var(--r);border:1px solid var(--border2);
+  background:var(--bg3);color:var(--txt2);font-family:var(--mono);font-size:10px;
+  letter-spacing:.5px;cursor:pointer;transition:.12s;text-align:center;display:flex;
+  flex-direction:column;align-items:center;gap:4px;}
+.sm-btn:hover{background:var(--bg4);border-color:var(--border3);color:var(--txt)}
+.sm-btn-icon{font-size:20px}
+.sm-link{display:flex;gap:6px;align-items:center}
+.sm-link input{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:3px;
+  padding:6px 9px;font-family:var(--mono);font-size:10px;color:var(--txt2);outline:none}
+.sm-link button{font-family:var(--mono);font-size:10px;color:var(--txt);
+  background:var(--bg3);border:1px solid var(--border2);border-radius:3px;
+  padding:6px 10px;cursor:pointer;transition:.12s;white-space:nowrap}
+.sm-link button:hover{background:var(--cyan);color:#000;border-color:var(--cyan)}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="hs">
+    <div class="live-pill">CANLI</div>
+    <div><div class="logo-name">LiveMapTR</div><div class="logo-sub">Global Catisma Merkezi</div></div>
+  </div>
+  <div class="hdr-chips">
+    <div class="chip"><div class="chip-val cv-red" id="sc-aktif">—</div><div class="chip-lbl">Aktif Catisma</div></div>
+    <div class="chip"><div class="chip-val cv-orange" id="sc-kritik">—</div><div class="chip-lbl">Kritik Bolge</div></div>
+    <div class="chip"><div class="chip-val cv-amber" id="sc-olaylar">—</div><div class="chip-lbl">Bugunun Olaylari</div></div>
+    <div class="chip"><div class="chip-val cv-txt" id="sc-gocmen" style="font-size:14px">—</div><div class="chip-lbl">Toplam Gocmen</div></div>
+    <div class="chip" style="border-right:none"><div class="chip-val cv-green" id="sc-haber">—</div><div class="chip-lbl">Aktif Haber</div></div>
+  </div>
+  <div class="ticker-wrap">
+    <div class="tick-lbl">OLAY AKISI</div>
+    <div class="tick-inner"><div class="tick-track" id="tick-track"><span class="tick-item">Veriler yukleniyor...</span></div></div>
+  </div>
+  <div class="hdr-right">
+    <div class="conn-wrap"><div class="cdot" id="cdot"></div><span id="ctxt">...</span></div>
+    <div class="hdr-clock" id="clock">--:--:--</div>
+    <button id="share-btn" title="Paylaş">🔗 PAYLAŞ</button>
+    <button id="sound-btn" title="Alarm Sesi">🔇 SES</button>
+    <button class="hdr-btn" id="btn-ref">YENILE</button>
+  </div>
+</header>
+
+<div id="root">
+  <div id="main">
+
+    <aside id="pl">
+      <div class="pl-hdr">
+        <div class="pl-title">Aktif Catismalar</div>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--txt3)" id="cf-badge">—</span>
+      </div>
+      <div class="pl-tabs">
+        <button class="pltab on" data-tab="all">TUMU</button>
+        <button class="pltab" data-tab="aktif">AKTIF</button>
+        <button class="pltab" data-tab="izleme">IZLEME</button>
+        <button class="pltab" data-tab="donmus">DONMUS</button>
+      </div>
+      <div id="cf-list"><div class="ld"><div class="ldspin"></div>YUKLENIYOR</div></div>
+    </aside>
+
+    <main id="map-area">
+      <div id="map"></div>
+      <div class="mo-tl">
+        <div class="mfrow">
+          <button class="mfb on" data-mf="all">TUM KATMANLAR</button>
+          <button class="mfb" data-mf="conflicts">CATISMA</button>
+          <button class="mfb" data-mf="events">OLAYLAR</button>
+          <button class="mfb" data-mf="news">HABERLER</button>
+        </div>
+      </div>
+      <div class="mo-tr">
+        <div class="msc"><div class="ms-lbl">EN YUKSEK RISK</div><div class="ms-val red" id="ms-risk" style="font-size:14px;font-family:var(--cond)">—</div><div class="ms-sub" id="ms-riskscore">—</div></div>
+        <div class="msc"><div class="ms-lbl">HABER MARKERI</div><div class="ms-val green" id="ms-hnews">0</div><div class="ms-sub">lokasyon tespit</div></div>
+      </div>
+      <div class="mo-bl">
+        <div class="leg-t">RİSK SEVİYESİ</div>
+        <div class="leg-r"><div class="ldot" style="background:#dc2626;box-shadow:0 0 6px rgba(220,38,38,.7)"></div>KRİTİK (85+)</div>
+        <div class="leg-r"><div class="ldot" style="background:#ea580c;box-shadow:0 0 5px rgba(249,115,22,.5)"></div>YÜKSEK (65-84)</div>
+        <div class="leg-r"><div class="ldot" style="background:#ca8a04"></div>ORTA (45-64)</div>
+        <div class="leg-r"><div class="ldot" style="background:#15803d"></div>DÜŞÜK (&lt;45)</div>
+        <div class="leg-r"><div class="ldot" style="background:#1d4ed8"></div>HABER NOKTASI</div>
+      </div>
+      <div id="impact-log"></div>
+    </main>
+
+    <aside id="pr">
+      <div id="d-empty"><div class="de-icon">🎯</div><div class="de-txt">Haritadan veya<br>listeden bir catisma secin</div></div>
+      <div id="d-content"></div>
+    </aside>
+  </div>
+
+
+  <div id="na-panel">
+    <div class="nap-hdr" id="nap-hdr">
+      <span class="nap-pill">LIVE</span>
+      <span class="nap-title">ULUSLARARASI ÇATIŞMA HABERLERİ</span>
+      <span class="nap-count" id="nap-count">—</span>
+      <span style="font-family:var(--mono);font-size:9px;color:var(--txt4);margin-right:8px" id="nap-src">NewsAPI</span>
+      <span class="nap-tog" id="nap-tog">▲ AÇ</span>
+    </div>
+    <div class="nap-body" id="nap-body">
+      <div class="na-loading"><div class="ldspin"></div>Haberler yükleniyor...</div>
+    </div>
+  </div>
+
+  <div id="feed">
+    <div class="fb-hdr" id="feed-hdr">
+      <div class="fb-title"><div class="fb-dot"></div>CANLI OLAY AKISI</div>
+      <div class="fb-r"><span class="fb-cnt" id="feed-cnt">0 olay</span><span class="fb-tog" id="feed-tog">▼ KUCULT</span></div>
+    </div>
+    <div id="feed-list"><div class="ld" style="width:200px"><div class="ldspin"></div></div></div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+<div id="screen-flash"></div>
+<div id="alarm-wrap"></div>
+
+<script>window._lfa=0;function waitL(cb){if(window.L&&L.markerClusterGroup){cb();return;}window._lfa++;if(window._lfa>80){console.error('Leaflet fail');return;}setTimeout(()=>waitL(cb),150);}</script>
+<script src="/lib/leaflet/leaflet.js" onerror="this.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'"></script>
+<script src="/lib/markercluster/leaflet.markercluster.js" onerror="this.src='https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js'"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+// LiveMapTR v3.5 — Global Catisma Takip Merkezi
+function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+function rel(iso){if(!iso)return'—';const m=(Date.now()-new Date(iso))/60000;if(m<1)return'simdi';if(m<60)return Math.floor(m)+' dk';if(m<1440)return Math.floor(m/60)+' sa';return Math.floor(m/1440)+' gun';}
+function toast(msg,t,dur){dur=dur||3000;const el=document.createElement('div');el.className='toast'+(t==='red'?' red':t==='green'?' green':'');el.innerHTML='<span>'+(t==='red'?'!':t==='green'?'OK':'i')+'</span><span>'+esc(msg)+'</span>';document.getElementById('toasts').prepend(el);setTimeout(()=>{el.style.opacity='0';el.style.transition='.3s';setTimeout(()=>el.remove(),300);},dur);}
+
+const S={conflicts:[],events:[],news:[],newsMarkers:[],sel:null,map:null,cluster:null,cfM:new Map(),hsM:[],newsM:new Map(),mf:'all',tab:'all',feedCol:false};
+
+// Saat
+setInterval(()=>{document.getElementById('clock').textContent=new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});},1000);
+
+// Feed toggle
+
+
+// List tabs
+// tabs -> initDomListeners
+
+// Map filters
+// mfb -> initDomListeners
+
+// Refresh
+
+
+// INT/STATUS labels
+const intLbl={kritik:'KRİTİK',yuksek:'YÜKSEK',orta:'ORTA',dusuk:'DÜŞÜK'};
+const stLbl={aktif:'AKTİF',donmus:'DONMUŞ',izleme:'İZLEME'};
+const svLbl={kritik:'KRİTİK',yuksek:'YÜKSEK',orta:'ORTA',dusuk:'DÜŞÜK'};
+
+// CONFLICT LIST
+function renderList(conflicts){
+  const el=document.getElementById('cf-list');
+  let list=S.tab==='all'?conflicts:conflicts.filter(c=>c.status===S.tab);
+  const stOrder={aktif:0,izleme:1,donmus:2};
+  list=[...list].sort((a,b)=>{const sd=(stOrder[a.status]??9)-(stOrder[b.status]??9);return sd!==0?sd:b.riskScore-a.riskScore;});
+  document.getElementById('cf-badge').textContent=list.length+'/'+conflicts.length;
+  if(!list.length){el.innerHTML='<div class="ld"><span>CATISMA YOK</span></div>';return;}
+  el.innerHTML=list.map(c=>`
+    <div class="cfc int-${c.intensity}${S.sel&&S.sel.id===c.id?' sel':''}" data-id="${esc(c.id)}">
+      <div class="cf-top">
+        <div class="cf-fn"><span class="cf-flag">${esc(c.flag)}</span><div><div class="cf-nm">${esc(c.name)}</div><div class="cf-rg">${esc(c.region)}</div></div></div>
+        <div class="cf-sc" style="color:${esc(c.riskColor||'#6b7280')}">${c.riskScore}</div>
+      </div>
+      <div class="cf-bot">
+        <span class="cbadge st-${c.status}">${stLbl[c.status]||c.status}</span>
+        <span class="cbadge in-${c.intensity}">${intLbl[c.intensity]||c.intensity}</span>
+      </div>
+      <div class="cf-bar"><div class="cf-fill" style="width:${c.riskScore}%;background:${esc(c.riskColor||'#10b981')}"></div></div>
+    </div>`).join('');
+  el.querySelectorAll('.cfc').forEach(card=>{
+    card.addEventListener('click',()=>{
+      const c=conflicts.find(x=>x.id===card.dataset.id);
+      if(c){selConflict(c);flyTo(c);}
+    });
+  });
+}
+
+// SELECT
+function selConflict(c){
+  S.sel=c;
+  document.querySelectorAll('.cfc').forEach(x=>x.classList.toggle('sel',x.dataset.id===c.id));
+  renderDetail(c);
+  startAnalyst(c);
+}
+
+function flyTo(c){
+  if(!S.map||!c.center)return;
+  S.map.flyTo([c.center.lat,c.center.lng],5,{duration:1.0});
+}
+
+// DETAIL
+function renderDetail(c){
+  document.getElementById('d-empty').style.display='none';
+  const dc=document.getElementById('d-content');
+  dc.classList.add('show');
+  const dur=c.startDate?Math.floor((Date.now()-new Date(c.startDate))/86400000):0;
+  const yr=c.startDate?new Date(c.startDate).getFullYear():'?';
+  const sc={'A':'rgba(59,130,246,.15)','B':'rgba(239,68,68,.15)','C':'rgba(245,158,11,.15)'};
+  const sb={'A':'rgba(59,130,246,.3)','B':'rgba(239,68,68,.3)','C':'rgba(245,158,11,.3)'};
+  const parties=(c.parties||[]).map(p=>`<div class="pty"><span class="pty-flag">${esc(p.flag)}</span><span class="pty-nm">${esc(p.name)}</span><span class="pty-side" style="background:${sc[p.side]||'rgba(100,116,139,.1)'};color:${p.color||'#94a3b8'};border:1px solid ${sb[p.side]||'rgba(100,116,139,.2)'}">TARAF ${esc(p.side)}</span></div>`).join('');
+  const hotspots=(c.hotspots||[]).map(h=>`<div class="hs-r" data-lat="${h.lat}" data-lng="${h.lng}"><span class="hs-icon">${esc(h.icon)}</span><span class="hs-nm">${esc(h.name)}</span><span class="hs-sv sv-${h.severity}">${svLbl[h.severity]||h.severity}</span></div>`).join('');
+  const tags=(c.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('');
+  const sources=(c.sources||[]).map(s=>`<div class="src-r">▸ ${esc(s)}</div>`).join('');
+  dc.innerHTML=`
+    <div class="dc-hdr">
+      <div class="dc-fn"><span class="dc-flag">${esc(c.flag)}</span><div><div class="dc-title">${esc(c.name)}</div><div class="dc-rg">${esc(c.region)} · ${yr}'den beri · ${dur} gün</div></div></div>
+      <div class="dc-badges"><span class="cbadge st-${c.status}">${stLbl[c.status]||c.status}</span><span class="cbadge in-${c.intensity}">${intLbl[c.intensity]||c.intensity}</span></div>
+    </div>
+    <div class="rm">
+      <div class="rm-lbl"><span class="rm-t">RİSK SKORU</span><span class="rm-s" style="color:${esc(c.riskColor||'#ef4444')}">${c.riskScore}/100</span></div>
+      <div class="rm-bar"><div class="rm-fill" style="width:${c.riskScore}%;background:${esc(c.riskColor||'#ef4444')}"></div></div>
+    </div>
+    <div class="dc-body">
+      <div class="dcs"><div class="dcs-t">ÖZET</div><div class="dc-sum">${esc(c.summary||'')}</div></div>
+      <div class="dcs"><div class="dcs-t">TARAFLAR</div>${parties}</div>
+      <div class="dcs">
+        <div class="dcs-t">KAYIPLAR & GÖÇ</div>
+        <div class="cas-g">
+          <div class="cas-c"><div class="cas-l">TOPLAM KAYIP</div><div class="cas-v">${esc(c.casualties&&c.casualties.total||'—')}</div></div>
+          <div class="cas-c"><div class="cas-l">GÜNLÜK</div><div class="cas-v">${esc(c.casualties&&c.casualties.daily||'—')}</div></div>
+          <div class="cas-c" style="grid-column:1/-1"><div class="cas-l">GÖÇMEN / ETKİLENEN</div><div class="cas-v" style="color:var(--amber)">${esc(c.displaced||'—')}</div></div>
+        </div>
+      </div>
+      ${hotspots?'<div class="dcs"><div class="dcs-t">SICAK NOKTALAR</div>'+hotspots+'</div>':''}
+      ${tags?'<div class="dcs"><div class="dcs-t">ETİKETLER</div><div class="tags-w">'+tags+'</div></div>':''}
+      ${sources?'<div class="dcs"><div class="dcs-t">KAYNAKLAR</div>'+sources+'</div>':''}
+    </div>`;
+  dc.querySelectorAll('.hs-r').forEach(r=>{
+    r.addEventListener('click',()=>{
+      const lt=parseFloat(r.dataset.lat),ln=parseFloat(r.dataset.lng);
+      if(!isNaN(lt)&&!isNaN(ln))S.map.flyTo([lt,ln],7,{duration:.7});
+    });
+  });
+}
+
+// EVENT FEED
+function renderFeed(events){
+  const el=document.getElementById('feed-list');
+  document.getElementById('feed-cnt').textContent=events.length+' olay';
+  if(!events.length){el.innerHTML='<div class="ld" style="width:200px"><span>OLAY YOK</span></div>';return;}
+  el.innerHTML=events.map(ev=>`
+    <div class="evc sv-${ev.severity}" data-cid="${esc(ev.conflictId||'')}">
+      <div class="ev-top"><span class="ev-ico">${esc(ev.icon||'!')}</span><span class="ev-rg">${esc(ev.region||'')}</span><span class="ev-t">${rel(ev.timestamp)}</span></div>
+      <div class="ev-txt">${esc(ev.text)}</div>
+    </div>`).join('');
+  el.querySelectorAll('.evc').forEach(card=>{
+    card.addEventListener('click',()=>{
+      const cid=card.dataset.cid;
+      if(cid){const c=S.conflicts.find(x=>x.id===cid);if(c){selConflict(c);flyTo(c);}}
+    });
+  });
+  // ticker
+  const trk=document.getElementById('tick-track');
+  trk.innerHTML=events.slice(0,10).map(ev=>`<span class="tick-item"><span>${esc(ev.icon)}</span><strong>${esc(ev.region)}</strong> — ${esc(ev.text)} &nbsp;|&nbsp;</span>`).join('');
+}
+
+// HEADER STATS
+function renderStats(stats,nc){
+  if(!stats)return;
+  document.getElementById('sc-aktif').textContent=stats.aktifCatisma||'—';
+  document.getElementById('sc-kritik').textContent=stats.kritikYogunluk||'—';
+  document.getElementById('sc-olaylar').textContent=S.events.length||'—';
+  document.getElementById('sc-gocmen').textContent=stats.toplamGocmen||'—';
+  document.getElementById('sc-haber').textContent=nc||'—';
+  if(stats.enYuksekRisk){
+    document.getElementById('ms-risk').textContent=stats.enYuksekRisk.name||'—';
+    document.getElementById('ms-riskscore').textContent='Risk: '+(stats.enYuksekRisk.score||'?')+'/100';
+  }
+}
+
+// MAP INIT
+function initMap(){
+  const map=L.map('map',{center:[20,20],zoom:3,zoomControl:true,attributionControl:true,preferCanvas:true});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(map);
+  const cluster=L.markerClusterGroup({maxClusterRadius:50,showCoverageOnHover:false,zoomToBoundsOnClick:true,spiderfyOnMaxZoom:true,animate:true,
+    iconCreateFunction:c=>{const n=c.getChildCount();const cl=n>=20?'large':n>=10?'medium':'small';return L.divIcon({html:'<div><span>'+n+'</span></div>',className:'marker-cluster marker-cluster-'+cl,iconSize:L.point(36,36)});}
+  });
+  map.addLayer(cluster);
+  S.map=map;S.cluster=cluster;
+}
+
+// ADD CONFLICT MARKERS
+function addConflictMarkers(conflicts){
+  S.cfM.forEach(m=>S.map.removeLayer(m));S.cfM.clear();
+  S.hsM.forEach(m=>S.map.removeLayer(m));S.hsM=[];
+  conflicts.forEach(c=>{
+    if(!c.center)return;
+    const sz=c.intensity==='kritik'?38:c.intensity==='yuksek'?32:28;
+    const icon=L.divIcon({html:'<div class="cm '+c.intensity+'" style="width:'+sz+'px;height:'+sz+'px"><span class="cm-icon">'+esc(c.flag)+'</span></div>',className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+    const m=L.marker([c.center.lat,c.center.lng],{icon});
+    m.bindPopup(`<div><div class="mpop-hdr"><span class="mpop-type" style="background:rgba(239,68,68,.1);color:${esc(c.riskColor||'#ef4444')};border-color:${esc(c.riskColor||'#ef4444')}50">${intLbl[c.intensity]||''} · ${c.riskScore}/100</span><span style="font-family:var(--mono);font-size:10px;color:var(--txt3)">${esc(c.region)}</span></div><div class="mpop-body"><div class="mpop-title">${esc(c.flag)} ${esc(c.name)}</div><div class="mpop-desc">${esc((c.summary||'').substring(0,130))}...</div><div class="mpop-meta">Etkilenen: ${esc(c.displaced||'?')} · Kayip: ${esc(c.casualties&&c.casualties.total||'?')}</div></div></div>`,{maxWidth:270,minWidth:230,closeButton:true});
+    m.on('click',()=>selConflict(c));
+    m._mtype='conflict';
+    S.map.addLayer(m);
+    S.cfM.set(c.id,m);
+    // hotspots
+    (c.hotspots||[]).forEach(h=>{
+      const hi=L.divIcon({html:'<div class="cm '+h.severity+'" style="width:16px;height:16px;font-size:9px"><span class="cm-icon">'+esc(h.icon)+'</span></div>',className:'',iconSize:[16,16],iconAnchor:[8,8]});
+      const hm=L.marker([h.lat,h.lng],{icon:hi,zIndexOffset:-50});
+      hm.bindTooltip('<span style="font-family:var(--mono);font-size:10px;letter-spacing:.3px">'+esc(h.name)+'</span>',{permanent:false,direction:'top'});
+      hm.on('click',()=>{selConflict(c);S.map.flyTo([h.lat,h.lng],7,{duration:.6});});
+      S.map.addLayer(hm);S.hsM.push(hm);
+    });
+  });
+}
+
+// ADD NEWS MARKERS
+function addNewsMarkers(markers){
+  S.newsM.forEach(m=>S.cluster.removeLayer(m));S.newsM.clear();
+  markers.forEach(mk=>{
+    const sz=mk.isBreaking?22:17;
+    const cls=mk.isBreaking?'brk':'haber';
+    const icon=L.divIcon({html:'<div class="cm '+cls+'" style="width:'+sz+'px;height:'+sz+'px"><span class="cm-icon">'+(mk.isBreaking?'⚡':'📰')+'</span></div>',className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+    const m=L.marker([mk.lat,mk.lng],{icon});
+    m.bindPopup('<div><div class="mpop-hdr"><span class="mpop-type" style="background:rgba(29,78,216,.1);color:#93c5fd;border-color:rgba(29,78,216,.3)">'+(mk.isBreaking?'SON DAKIKA':'HABER')+'</span><span style="font-family:var(--mono);font-size:10px;color:var(--txt3)">'+esc(mk.locationName||'')+'</span></div><div class="mpop-body"><div class="mpop-title">'+esc(mk.title)+'</div><div class="mpop-meta">'+esc(mk.source)+' · '+rel(mk.publishedAt)+'</div></div>'+(mk.url?'<a href="'+esc(mk.url)+'" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;color:var(--cyan);padding:6px 11px 7px;border-top:1px solid var(--border)">→ Habere Git</a>':'')+'</div>',{maxWidth:260,minWidth:210,closeButton:true});
+    m._mtype='haber';
+    S.cluster.addLayer(m);
+    S.newsM.set(mk.id||('n'+Math.random()),m);
+  });
+  document.getElementById('ms-hnews').textContent=markers.length;
+}
+
+// APPLY FILTER
+function applyFilter(){
+  const f=S.mf;
+  S.cfM.forEach(m=>f==='all'||f==='conflicts'?S.map.addLayer(m):S.map.removeLayer(m));
+  S.hsM.forEach(m=>f==='all'||f==='conflicts'?S.map.addLayer(m):S.map.removeLayer(m));
+  S.newsM.forEach(m=>f==='all'||f==='news'?S.cluster.addLayer(m):S.cluster.removeLayer(m));
+}
+
+// LOAD ALL
+async function loadAll(){
+  try{
+    const [cfR,evR,stR,allR]=await Promise.all([
+      fetch('/api/conflicts').then(r=>r.json()),
+      fetch('/api/conflicts/events').then(r=>r.json()),
+      fetch('/api/conflicts/stats').then(r=>r.json()),
+      fetch('/api/all').then(r=>r.json()),
+    ]);
+    if(cfR.basari&&cfR.veri){S.conflicts=cfR.veri;renderList(S.conflicts);addConflictMarkers(S.conflicts);}
+    if(evR.basari&&evR.veri){S.events=evR.veri;renderFeed(S.events);}
+    let nc=0;
+    if(allR.basari&&allR.veri){
+      nc=(allR.veri.haberler||[]).length;
+      if(allR.veri.markers&&allR.veri.markers.length){S.newsMarkers=allR.veri.markers;addNewsMarkers(allR.veri.markers);}
+    }
+    if(stR.basari&&stR.veri)renderStats(stR.veri,nc);
+    applyFilter();
+  }catch(e){
+    console.error(e);
+    toast('Veri yukleme hatasi: '+e.message,'red',5000);
+  }
+}
+
+// SOCKET
+function initSocket(){
+  const s=io({transports:['websocket','polling']});
+  s.on('connect',()=>{document.getElementById('cdot').className='cdot ok';document.getElementById('ctxt').textContent='BAGLI';toast('Sunucuya baglandi','green',2000);});
+  s.on('disconnect',()=>{document.getElementById('cdot').className='cdot err';document.getElementById('ctxt').textContent='KESİLDİ';toast('Baglanti kesildi','red',4000);});
+  s.on('haberler_guncellendi',d=>{
+    if(d.markers){addNewsMarkers(d.markers);applyFilter();}
+    document.getElementById('sc-haber').textContent=(d.haberler||[]).length||'—';
+  });
+  s.on('conflict_news_updated',d=>{
+    if(d.conflictNews){ S.naArticles=d.conflictNews; renderNaPanel(S.naArticles); }
+    if(d.naMarkers&&d.naMarkers.length){ addNewsMarkers(d.naMarkers); applyFilter(); }
+    toast(d.conflictNews.length+' uluslararasi haber guncellendi','green',2500);
+  });
+  s.on('acled_updated',d=>{
+    if(d.markers&&d.markers.length){
+      addAcledMarkers(d.markers);
+      const st=d.stats||{};
+      toast('ACLED: '+d.markers.length+' gercek olay guncellendi','green',3000);
+    }
+  });
+  s.on('initial_data',d=>{
+    if(d.conflictNews){ S.naArticles=d.conflictNews; renderNaPanel(S.naArticles); }
+  });
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+//  LiveMapTR v3.6 — Canlı Alarm + Risk Termometresi + Analist + İmpact
+// ══════════════════════════════════════════════════════════════════
+
+// ── Global state eklemeleri ──
+S.soundOn   = false;
+S.alarmQueue= [];
+S.riskDeltas= {};     // conflictId -> {score, prev, delta}
+S.analystTimer = null;
+S.analystIdx   = 0;
+S.impactLog    = [];
+
+// ── Ses Sistemi ──────────────────────────────────────────────────
+const AC = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+function getAudio(){ if(!audioCtx&&AC) audioCtx=new AC(); return audioCtx; }
+
+function playAlarmBeep(type){
+  if(!S.soundOn) return;
+  const ctx = getAudio(); if(!ctx) return;
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+  o.connect(g); g.connect(ctx.destination);
+  if(type==='missile'){
+    o.frequency.setValueAtTime(880, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(220, ctx.currentTime+0.4);
+    g.gain.setValueAtTime(0.3, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.5);
+    o.start(); o.stop(ctx.currentTime+0.5);
+  } else if(type==='drone'){
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(440, ctx.currentTime);
+    o.frequency.setValueAtTime(330, ctx.currentTime+0.15);
+    o.frequency.setValueAtTime(440, ctx.currentTime+0.3);
+    g.gain.setValueAtTime(0.2, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.5);
+    o.start(); o.stop(ctx.currentTime+0.5);
+  } else {
+    o.frequency.setValueAtTime(660, ctx.currentTime);
+    g.gain.setValueAtTime(0.15, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.3);
+    o.start(); o.stop(ctx.currentTime+0.3);
+  }
+}
+
+
+
+// ── Screen Flash ─────────────────────────────────────────────────
+function screenFlash(){
+  const el=document.getElementById('screen-flash');
+  el.classList.add('flash');
+  setTimeout(()=>el.classList.remove('flash'),120);
+}
+
+// ── Alarm Sistemi ─────────────────────────────────────────────────
+const ALARM_EVENTS = [
+  {type:'missile',icon:'\u{1F680}',title:'Balistik Fuze Saldirisi',conflicts:['iran_israel','ukraine','gulf_nuclear'],
+   events:['Tel Aviv yonune 3 balistik fuze ateslendi','Kyiv yakinlarina fuze saldirisi','Hurmuz Bogazi fuze tehdidi'],
+   locs:[{lat:32.0853,lng:34.7818},{lat:50.4501,lng:30.5234},{lat:26.5,lng:56.0}],severity:'kritik'},
+  {type:'drone',icon:'\u{1F916}',title:'IHA/Drone Saldirisi',conflicts:['ukraine','iran_israel','gulf_nuclear'],
+   events:['Kharkiv IHA saldirisi: altyapi vuruldu','Kuzey Israil Hizbullah dronu','Basra Korfezi IRGC dronu tespit edildi'],
+   locs:[{lat:49.99,lng:36.23},{lat:33.0,lng:35.5},{lat:28.0,lng:50.5}],severity:'kritik'},
+  {type:'airstrike',icon:'\u2708',title:'Hava Saldirisi',conflicts:['gaza','sudan','drcongo'],
+   events:['Kuzey Gazze yogun hava bombardimani','Hartum hava saldirisi','Kuzey Kivu hava harekati'],
+   locs:[{lat:31.5,lng:34.47},{lat:15.5,lng:32.56},{lat:-0.5,lng:29.4}],severity:'kritik'},
+  {type:'artillery',icon:'\u{1F4A5}',title:'Topcu/Roket Saldirisi',conflicts:['ukraine','gaza','yemen'],
+   events:['Zaporizhzhia cephesinde yogun topcu atisi','Han Yunus roket saldirisi','Marib Husi balistik fuzesi'],
+   locs:[{lat:47.84,lng:35.14},{lat:31.3,lng:34.25},{lat:14.8,lng:45.32}],severity:'yuksek'},
+  {type:'naval',icon:'\u2693',title:'Deniz Olayi',conflicts:['gulf_nuclear','yemen'],
+   events:['IRGC Korfez ABD savas gemisine yaklasti','Husi saldirisi: ticaret gemisi Kizildeniz vuruldu'],
+   locs:[{lat:26.5,lng:56.0},{lat:14.8,lng:42.95}],severity:'yuksek'},
+  {type:'explosion',icon:'\u{1F4A3}',title:'Patlama/IED',conflicts:['sahel','haiti','myanmar'],
+   events:['Ouagadougou konvoya EYP saldirisi','Port-au-Prince patlama','Sagaing askeri araca bombali saldiri'],
+   locs:[{lat:12.36,lng:-1.53},{lat:18.54,lng:-72.33},{lat:21.96,lng:96.09}],severity:'orta'},
+  {type:'cyber',icon:'\u{1F4BB}',title:'Siber Saldiri',conflicts:['ukraine','iran_israel'],
+   events:['Ukrayna enerji altyapisina siber saldiri','Israil hukumeti sistemlerine sizma girisimi'],
+   locs:[{lat:50.45,lng:30.52},{lat:31.77,lng:35.22}],severity:'orta'},
+];
+
+function triggerAlarm(){
+  if(!S.conflicts.length) return;
+  const template = ALARM_EVENTS[Math.floor(Math.random()*ALARM_EVENTS.length)];
+  const idx      = Math.floor(Math.random()*template.events.length);
+  const conf     = S.conflicts.find(c=>c.id===template.conflicts[Math.min(idx,template.conflicts.length-1)]);
+  const loc      = template.locs[Math.min(idx,template.locs.length-1)];
+  const text     = template.events[idx];
+  const now      = new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+
+  // Screen flash
+  screenFlash();
+
+  // Ses
+  playAlarmBeep(template.type);
+
+  // Haritaya impact animasyonu
+  if(S.map && loc) addImpactMarker(loc.lat, loc.lng, template.type, text);
+
+  // Alarm kartı
+  showAlarmCard({icon:template.icon, title:template.title, text, loc, conf, severity:template.severity, time:now, type:template.type});
+
+  // Impact log güncelle
+  addImpactLog(template.icon, text, now, template.severity);
+
+  // Ticker'a ekle
+  prependTicker(template.icon+' '+text);
+}
+
+function showAlarmCard(ev){
+  const wrap = document.getElementById('alarm-wrap');
+  const card = document.createElement('div');
+  card.className='alarm-card';
+  card.innerHTML=`
+    <div class="alm-top">
+      <span class="alm-pill">⚡ CANLI</span>
+      <span class="alm-icon">${esc(ev.icon)}</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--txt)">${esc(ev.title)}</span>
+      <span class="alm-sev ${ev.severity}">${ev.severity.toUpperCase()}</span>
+      <span class="alm-time">${esc(ev.time)}</span>
+    </div>
+    <div class="alm-title">${esc(ev.text)}</div>
+    <div class="alm-loc">${ev.conf?ev.conf.flag+' '+ev.conf.name:''}</div>
+    ${ev.loc?'<span class="alm-zoom" data-lat="'+ev.loc.lat+'" data-lng="'+ev.loc.lng+'">→ Haritada Göster</span>':''}
+    <div class="alm-prog"><div class="alm-prog-fill" style="width:100%;transition:width 7s linear"></div></div>`;
+  wrap.prepend(card);
+
+  // Zoom tıklama
+  const zBtn=card.querySelector('.alm-zoom');
+  if(zBtn) zBtn.addEventListener('click',()=>{
+    S.map.flyTo([parseFloat(zBtn.dataset.lat),parseFloat(zBtn.dataset.lng)],7,{duration:.8});
+    if(ev.conf) selConflict(ev.conf);
+  });
+
+  // Progress bar animasyonu
+  requestAnimationFrame(()=>{
+    const fill=card.querySelector('.alm-prog-fill');
+    if(fill) fill.style.width='0%';
+  });
+
+  // 7sn sonra kaldır
+  setTimeout(()=>{
+    card.style.animation='alm-out .3s ease forwards';
+    setTimeout(()=>card.remove(),300);
+  },7000);
+
+  // Maks 3 kart
+  while(wrap.children.length>3) wrap.lastChild.remove();
+}
+
+// ── Harita Impact Marker ─────────────────────────────────────────
+function addImpactMarker(lat,lng,type,text){
+  if(!S.map) return;
+  const icon=L.divIcon({
+    html:`<div style="position:relative;width:0;height:0">
+      <div class="impact-dot"></div>
+      <div class="impact-ring"></div>
+      <div class="impact-ring" style="animation-delay:.3s"></div>
+      <div class="impact-ring" style="animation-delay:.6s"></div>
+    </div>`,
+    className:'',iconSize:[0,0],iconAnchor:[0,0]
+  });
+  const m=L.marker([lat,lng],{icon,zIndexOffset:5000,interactive:false});
+  m.bindTooltip('<span style="font-family:var(--mono);font-size:10px">'+esc(text)+'</span>',{permanent:false});
+  S.map.addLayer(m);
+  // 4sn sonra kaldır
+  setTimeout(()=>S.map.removeLayer(m),4000);
+
+  // Eğer olay uzaksa fly etme, yakınsa sadece pulse
+  const bounds=S.map.getBounds();
+  if(!bounds.contains([lat,lng])){
+    // sadece anlık pan değil — kullanıcıya dokunma
+  }
+}
+
+// ── Impact Log (harita sağ alt) ──────────────────────────────────
+function addImpactLog(icon,text,time,sev){
+  const log=document.getElementById('impact-log');
+  const item=document.createElement('div');
+  item.className='ilog-item';
+  const short=text.length>55?text.substring(0,55)+'…':text;
+  item.innerHTML=`<span class="ilog-icon">${esc(icon)}</span><span class="ilog-txt">${esc(short)}<span class="ilog-t">${esc(time)}</span></span>`;
+  log.prepend(item);
+  setTimeout(()=>{item.style.opacity='0';item.style.transition='.4s';setTimeout(()=>item.remove(),400);},12000);
+  while(log.children.length>4) log.lastChild.remove();
+}
+
+// ── Ticker'a prepend ─────────────────────────────────────────────
+function prependTicker(text){
+  const trk=document.getElementById('tick-track');
+  const sp=document.createElement('span');
+  sp.className='tick-item';
+  sp.style.color='var(--red)';
+  sp.style.fontWeight='bold';
+  sp.innerHTML='⚡ '+esc(text)+' &nbsp;|&nbsp;';
+  trk.prepend(sp);
+  setTimeout(()=>sp.remove(),60000);
+}
+
+// ── Risk Termometresi ────────────────────────────────────────────
+function initRiskPulse(){
+  setInterval(()=>{
+    if(!S.conflicts.length) return;
+    // Her turda 2-4 çatışmanın skoru hafifçe dalgalansın
+    const n=2+Math.floor(Math.random()*3);
+    const shuffled=[...S.conflicts].sort(()=>Math.random()-.5).slice(0,n);
+    shuffled.forEach(c=>{
+      const prev=S.riskDeltas[c.id]||c.riskScore;
+      const delta=(Math.random()<0.6?1:-1)*Math.floor(Math.random()*3+1);
+      const newScore=Math.min(100,Math.max(1,prev+delta));
+      S.riskDeltas[c.id]=newScore;
+      // DOM güncelle
+      const card=document.querySelector('.cfc[data-id="'+c.id+'"]');
+      if(!card) return;
+      const scEl=card.querySelector('.cf-sc');
+      const fillEl=card.querySelector('.cf-fill');
+      if(scEl){
+        const dir=delta>0?'up':'dn';
+        const arrow=delta>0?'▲':'▼';
+        scEl.innerHTML=newScore+'<span class="cf-delta '+dir+'">'+arrow+'</span>';
+        scEl.style.color=delta>0?'var(--red)':'var(--green)';
+        setTimeout(()=>{scEl.style.color='var(--txt2)';},1200);
+      }
+      if(fillEl){
+        fillEl.style.width=newScore+'%';
+        const rc=newScore>=85?'#ef4444':newScore>=65?'#f97316':newScore>=45?'#f59e0b':'#10b981';
+        fillEl.style.background=rc;
+      }
+      // Seçili çatışmanın detay paneli risk barını da güncelle
+      if(S.sel&&S.sel.id===c.id){
+        const rmFill=document.querySelector('.rm-fill');
+        const rmS=document.querySelector('.rm-s');
+        if(rmFill) rmFill.style.width=newScore+'%';
+        if(rmS) rmS.textContent=newScore+'/100';
+      }
+    });
+  }, 8000); // Her 8sn
+}
+
+// ── Analist Yorumu ───────────────────────────────────────────────
+const ANALYST_NOTES = {
+  iran_israel:[
+    "Iran'in Fordo tesisinde son 48 saatte arttirilmis nukleer aktivite gozlemlendi. Uydu goruntuleri yeni santrifuj kurulumuna isaret ediyor.",
+    "CENTCOM, Korfez'deki deniz varligini 2 ek destroyer ile guclenirdi. Kaynaklar ABD'nin gizli muzakerelerde Iran'a 72 saatlik ultimatom verdigini iddia ediyor.",
+    "Israil Hava Kuvvetleri son 24 saatte 3 kez Suriye uzerinden gegen Iran ucagini taciz etti. Bolgesel gerilim tirmanmaya devam ediyor.",
+    "Direnis Ekseni koordinasyon toplantisi yapildigi one suruluyor. Hizbullah kuzey cephesini etkinlestirmeye hazir oldugunu ima etti.",
+    "ABD Kongresi'nde Iran'a karsi yeni yaptirim paketi oylamasi yaklastyor. Trump yonetimi maksimum baski politikasini yogunlastiriyor.",
+  ],
+  gulf_nuclear:[
+    "IAEA Baskani: Iran nukleer bomba icin gereken uranyumu teorik olarak 12 gunde uretebilir. Buyuk gucler acil toplantiya cagirildi.",
+    "Korfez ulkeleri bolgeye ABD patriot sistemlerinin konuslandirilmasini talep etti. Savunma anlasmalari muzakereleri hizlandi.",
+    "Hurmuz Bogazi'ndan gunluk 17 milyon varil petrol geciyor. Bogazin kapanmasi kuresel ekonomiye 1.5 trilyon dolar zarar verebilir.",
+    "Iran Disisleri: Muzakere masasina donmeye haziriz, ancak yaptirim kaldirilmasi on kosul. ABD bu talebi reddetti.",
+  ],
+  ukraine:[
+    "Ukrayna istihbarati Rus kuvvetlerinin Donetsk cephesinde 40.000 kisilik yedek takviye konusllandirdigini bildiriyor.",
+    "NATO muttefikleri Ukrayna'ya F-16 disinda ilk kez uzun menzilli kara fuzesi gondermeyi degerlendiriyor.",
+    "Zaporizhzhia nukleer santralinde supheli drone aktivitesi. IAEA ekibi bolgeye erisim talep etti.",
+    "Rusya son 72 saatte 180 fuze ve drone ile Ukrayna altyapisini vurdu. Enerji sistemi yuzde 30 kapasitede calisiyor.",
+  ],
+  gaza:[
+    "BM OCHA: Gazze'de insani yardim koridoru 11. kez kapatildi. 2.3 milyon insan hayatta kalmak icin mucadele ediyor.",
+    "Misir ve Katar arabuluculugunda ateskés gorusmeleri yeniden basladi. Taraflar cephane miktari konusunda anlasmazlik yasiyor.",
+    "IDF, Hamas'in Refah'ta yeniden orgulendigini acikladi. Yeni kara harekati hazirligi iddiasi dogrulanamadi.",
+  ],
+  sudan:[
+    "RSF, Hartum'un bati yakasinda tam kontrolu ele gecirdi. SAF kuvvetleri kuzeye cekilmek zorunda kaldi.",
+    "BM: Sudan'da 25 milyondan fazla insan insani yardima muhtac. Darfur'da kitlik riski kritik esige ulasti.",
+  ],
+  drcongo:[
+    "M23 Goma'nin uluslararasi havalimanina 5 km mesafeye ilerledi. Tahliye ucuslari askiya alindi.",
+    "Ruanda, DR Kongo operasyonlarina katilimini resmen reddetti. BM sorusturmasi devam ediyor.",
+  ],
+  myanmar:[
+    "PDF ve etnik silahli orgutler Sagaing'in tamamini ele gecirdi. Cunta kuvvetleri 3 vilayetten cekildi.",
+    "Cunta'nin hava saldirilari son haftada 12 sivil koyu vurdu. Uluslararasi Ceza Mahkemesi sorusturma baslatti.",
+  ],
+  default:[
+    "Sahada durum degerlendiriliyor. Analistler mevcut gelismelerin bolgesel dengeleri degistirebilecegini vurguluyor.",
+    "BM Guvenlik Konseyi acil toplantiya cagirildi. Catismanin yayilma riski tartisiliyor.",
+    "Insani yardim kuruluslari bolgeye erisgimin kisitlandigini bildiriyor. Sivil kayiplar dogrulanamıyor.",
+  ],
+}
+
+function startAnalyst(conflict){
+  clearAnalystSection();
+  if(!conflict) return;
+
+  const wrap=document.getElementById('d-content');
+  if(!wrap||!wrap.classList.contains('show')) return;
+
+  // Analist section'ı body'den önce ekle (varsa güncelle)
+  let aw=document.getElementById('analyst-wrap');
+  if(!aw){
+    aw=document.createElement('div');
+    aw.id='analyst-wrap';
+    const body=wrap.querySelector('.dc-body');
+    if(body) wrap.insertBefore(aw,body);
+    else wrap.appendChild(aw);
+  }
+
+  // Hemen ilk yorumu başlat
+  showAnalystNote(conflict);
+
+  // Timer — 35-55sn arası
+  if(S.analystTimer) clearInterval(S.analystTimer);
+  S.analystTimer=setInterval(()=>showAnalystNote(conflict), 38000+Math.random()*15000);
+}
+
+function clearAnalystSection(){
+  if(S.analystTimer){ clearInterval(S.analystTimer); S.analystTimer=null; }
+}
+
+function showAnalystNote(conflict){
+  const aw=document.getElementById('analyst-wrap');
+  if(!aw) return;
+  const pool=ANALYST_NOTES[conflict.id]||ANALYST_NOTES.default;
+  const note=pool[S.analystIdx%pool.length];
+  S.analystIdx++;
+  const now=new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+
+  // Typing animasyonu göster
+  aw.innerHTML=`
+    <div class="analyst-hdr">
+      <span class="analyst-badge">AI ANALİST</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--txt2)">${esc(conflict.flag)} ${esc(conflict.name)}</span>
+      <span class="analyst-time">${now}</span>
+    </div>
+    <div class="analyst-typing"><div class="analyst-dot"></div><div class="analyst-dot"></div><div class="analyst-dot"></div></div>`;
+
+  // 1.5sn sonra metni yaz
+  setTimeout(()=>{
+    aw.innerHTML=`
+      <div class="analyst-hdr">
+        <span class="analyst-badge">AI ANALİST</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--txt2)">${esc(conflict.flag)} ${esc(conflict.name)}</span>
+        <span class="analyst-time">${now}</span>
+      </div>
+      <div class="analyst-body">
+        <div class="analyst-txt" id="analyst-type-txt"></div>
+      </div>`;
+    typewriterEffect(document.getElementById('analyst-type-txt'), note, 22);
+  },1500);
+}
+
+function typewriterEffect(el, text, speed){
+  if(!el) return;
+  el.textContent='';
+  const cursor=document.createElement('span');
+  cursor.className='analyst-cursor';
+  el.appendChild(cursor);
+  let i=0;
+  const t=setInterval(()=>{
+    if(i<text.length){
+      el.insertBefore(document.createTextNode(text[i]),cursor);
+      i++;
+    } else {
+      clearInterval(t);
+      setTimeout(()=>cursor.remove(),2000);
+    }
+  },speed);
+}
+
+// ── Alarm Zamanlayıcısı ─────────────────────────────────────────
+function startAlarmLoop(){
+  // İlk alarm 15-25sn sonra
+  setTimeout(()=>{
+    triggerAlarm();
+    // Sonrakiler 25-55sn arası rastgele
+    setInterval(()=>triggerAlarm(), 25000+Math.random()*30000);
+  }, 15000+Math.random()*10000);
+}
+
+
+// ═══ NEWSAPI PANEL ═══════════════════════════════════════════
+S.naArticles = [];
+S.naOpen = false;
+
+function initNapPanel(){
+  const napHdr=document.getElementById('nap-hdr');
+  if(napHdr) napHdr.addEventListener('click', () => {
+    S.naOpen = !S.naOpen;
+    document.getElementById('na-panel').classList.toggle('open', S.naOpen);
+    document.getElementById('nap-tog').textContent = S.naOpen ? '▼ KAPAT' : '▲ AÇ';
+  });
+}
+
+const SEV_LABELS = { critical:'KRİTİK', high:'YÜKSEK', medium:'ORTA', low:'DÜŞÜK' };
+const CAT_LABELS = { strike:'SALDIRI', casualties:'KAYIP', diplomacy:'DİPLOMASİ', military:'ASKERİ', news:'HABER' };
+const CONF_FLAGS = { iran_israel:'🇮🇱🇮🇷', gaza:'🇵🇸', ukraine:'🇺🇦', gulf_nuclear:'⚛️',
+  sudan:'🇸🇩', drcongo:'🇨🇩', yemen:'🇾🇪', myanmar:'🇲🇲', sahel:'🌍', haiti:'🇭🇹' };
+
+function renderNaPanel(articles) {
+  const body = document.getElementById('nap-body');
+  const count = document.getElementById('nap-count');
+  if (!articles || !articles.length) {
+    body.innerHTML = '<div class="na-empty">Haber bulunamadı</div>';
+    return;
+  }
+  count.textContent = articles.length + ' haber';
+  body.innerHTML = articles.map(a => {
+    const ago = rel(a.publishedAt);
+    const flag = CONF_FLAGS[a.conflictId] || '🌐';
+    const catLbl = CAT_LABELS[a.category] || a.category.toUpperCase();
+    const sevCls = 'sev-' + (a.severity || 'low');
+    const brk = a.isBreaking ? '<span class="na-brk">SON DAKİKA</span>' : '';
+    return `<div class="na-card ${sevCls}" onclick="window.open('${esc(a.url)}','_blank')">
+      <div class="na-top">${brk}<span class="na-src">${esc(a.source)}</span><span class="na-time">${ago}</span></div>
+      <div class="na-title">${esc(a.title)}</div>
+      <div class="na-bot">
+        <span class="na-cat">${catLbl}</span>
+        <span class="na-conf">${flag}</span>
+        <span class="na-link">→ OKU</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function loadNewsApi() {
+  try {
+    const res = await fetch('/api/newsapi/latest');
+    const j = await res.json();
+    if (j.ok && j.data) {
+      S.naArticles = j.data;
+      renderNaPanel(S.naArticles);
+    }
+  } catch(e) {
+    document.getElementById('nap-body').innerHTML = '<div class="na-empty">Bağlantı hatası</div>';
+  }
+}
+
+
+// ═══ ACLED MARKERS ═══════════════════════════════════════════
+S.acledM = [];
+function addAcledMarkers(events){
+  // Eskilerı temizle
+  S.acledM.forEach(m=>S.map.removeLayer(m));
+  S.acledM=[];
+  events.forEach(e=>{
+    if(isNaN(e.lat)||isNaN(e.lng)) return;
+    const col = e.severity==='critical'?'#ef4444':e.severity==='high'?'#f97316':e.severity==='medium'?'#f59e0b':'#6b7280';
+    const sz  = e.fatalities>=50?20:e.fatalities>=10?16:e.fatalities>=1?13:10;
+    const ico = L.divIcon({
+      html:'<div style="width:'+sz+'px;height:'+sz+'px;background:'+col+';border-radius:50%;border:2px solid rgba(255,255,255,.3);box-shadow:0 0 8px '+col+';display:flex;align-items:center;justify-content:center;font-size:'+(sz-4)+'px">'+
+           (e.type&&e.type.includes('Patlama')?'💥':e.type&&e.type.includes('Sivil')?'⚠️':'⚔️')+'</div>',
+      className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]
+    });
+    const m=L.marker([e.lat,e.lng],{icon:ico,zIndexOffset:100});
+    m.bindPopup('<div class="mpop-hdr"><span style="font-family:var(--mono);font-size:10px;color:'+col+'">ACLED · '+esc(e.type)+'</span></div>'+
+      '<div class="mpop-body"><div class="mpop-title">'+esc(e.location||e.country)+'</div>'+
+      '<div class="mpop-desc">'+esc(e.notes||'')+'</div>'+
+      '<div class="mpop-meta">Kayıp: '+(e.fatalities||0)+' · '+esc(e.date)+' · '+esc(e.country)+'</div></div>');
+    m.on('click',()=>{ if(e.conflictId){ const cf=S.conflicts.find(x=>x.id===e.conflictId); if(cf) selConflict(cf); } });
+    S.map.addLayer(m);
+    S.acledM.push(m);
+  });
+}
+
+async function loadAcled(){
+  try{
+    const res=await fetch('/api/acled/events?limit=300');
+    const j=await res.json();
+    if(j.ok&&j.data&&j.data.length){
+      addAcledMarkers(j.data);
+      toast('ACLED: '+j.data.length+' gercek olay yuklendi','green',3000);
+    }
+  }catch(e){ console.warn('ACLED load:',e); }
+}
+
+
+// ═══ MOBİL TAB SİSTEMİ ══════════════════════════════════════════
+function mobTab(tab){
+  const isMob = window.innerWidth <= 768;
+  document.querySelectorAll('.mnb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('mnb-'+tab).classList.add('on');
+
+  if(!isMob) return; // masaüstünde sadece highlight
+
+  const pl=document.getElementById('pl');
+  const pr=document.getElementById('pr');
+  pl.classList.remove('mob-show');
+  pr.classList.remove('mob-show');
+
+  if(tab==='list')   pl.classList.add('mob-show');
+  if(tab==='detail') pr.classList.add('mob-show');
+  if(tab==='news'){
+    // NewsAPI panelini aç
+    S.naOpen=true;
+    document.getElementById('na-panel').classList.add('open');
+    document.getElementById('nap-tog').textContent='▼ KAPAT';
+  }
+  // map: her ikisi de gizli = harita görünür
+}
+
+// Pencere boyutu değişince reset
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>768){
+    document.getElementById('pl').classList.remove('mob-show');
+    document.getElementById('pr').classList.remove('mob-show');
+  }
+});
+
+// selConflict'te mobilde detay sekmesine geç
+const _origSel = selConflict;
+// selConflict zaten tanımlı, monkey-patch
+const _oldSelConflict = window.selConflict || null;
+
+// ═══ PAYLAŞ ═════════════════════════════════════════════════════
+// share-btn init -> initShareBtn()
+
+function openShare(){
+  const modal = document.getElementById('share-modal');
+  // Seçili çatışma varsa URL'ye ekle
+  const url = S.sel
+    ? 'https://livemaptr.com/?c=' + S.sel.id
+    : 'https://livemaptr.com';
+  document.getElementById('share-url').value = url;
+  modal.classList.add('open');
+}
+function closeShare(){ document.getElementById('share-modal').classList.remove('open'); }
+// share-modal init -> initShareBtn()
+
+function shareTwitter(){
+  const txt = S.sel
+    ? 'Canlı takip: ' + S.sel.flag + ' ' + S.sel.name + ' — Risk: ' + (S.riskDeltas[S.sel.id]||S.sel.riskScore) + '/100'
+    : 'Dünya genelindeki çatışmaları canlı takip ediyorum';
+  const url = document.getElementById('share-url').value;
+  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url)+'&hashtags=LiveMapTR,CanlıHarita','_blank');
+  closeShare();
+}
+function shareWhatsapp(){
+  const url = document.getElementById('share-url').value;
+  const txt = (S.sel ? S.sel.flag+' '+S.sel.name+' — ' : '') + 'Canlı çatışma haritası: ' + url;
+  window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(txt),'_blank');
+  closeShare();
+}
+function shareTelegram(){
+  const url = document.getElementById('share-url').value;
+  const txt = (S.sel ? S.sel.flag+' '+S.sel.name+' | ' : '') + 'LiveMapTR Canlı Çatışma Haritası';
+  window.open('https://t.me/share/url?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(txt),'_blank');
+  closeShare();
+}
+function copyLink(){
+  const inp = document.getElementById('share-url');
+  inp.select();
+  document.execCommand('copy');
+  toast('Link kopyalandı','green',2000);
+  closeShare();
+}
+
+// Detay paneli açılınca mobilde sekmeye geç
+const _origRenderDetail = renderDetail;
+function renderDetail(c){
+  _origRenderDetail(c);
+  if(window.innerWidth<=768) mobTab('detail');
+}
+
+
+function initDomListeners(){
+  // NAP panel
+  initNapPanel();
+  // Share buton
+  const shareBtn=document.getElementById('share-btn');
+  if(shareBtn) shareBtn.addEventListener('click', openShare);
+  const shareMod=document.getElementById('share-modal');
+  if(shareMod) shareMod.addEventListener('click',function(e){ if(e.target===this) closeShare(); });
+  // Sound btn
+  const soundBtn=document.getElementById('sound-btn');
+  if(soundBtn) soundBtn.addEventListener('click',function(){
+    S.soundOn=!S.soundOn;
+    this.textContent=S.soundOn?'🔊 SES':'🔇 SES';
+    this.classList.toggle('on',S.soundOn);
+    if(S.soundOn){ getAudio(); playAlarmBeep('alert'); }
+  });
+  // Refresh btn
+  const refBtn=document.getElementById('btn-ref');
+  if(refBtn) refBtn.addEventListener('click',()=>{
+    refBtn.textContent='...';
+    loadAll().finally(()=>refBtn.textContent='YENILE');
+  });
+  // Feed toggle
+  const feedHdr=document.getElementById('feed-hdr');
+  if(feedHdr) feedHdr.addEventListener('click',()=>{
+    S.feedCol=!S.feedCol;
+    document.getElementById('feed').classList.toggle('collapsed',S.feedCol);
+    document.getElementById('feed-tog').textContent=S.feedCol?'GENISLET':'KUCULT';
+  });
+  // List tabs -> initDomListeners
+  // Map filters -> initDomListeners
+}
+// START
+waitL(()=>{initDomListeners();initMap();initSocket();loadAll();loadNewsApi();loadAcled();initRiskPulse();startAlarmLoop();});
+</script>
+
+<!-- MOBİL NAV -->
+<nav id="mob-nav">
+  <button class="mnb on" id="mnb-map" onclick="mobTab('map')">
+    <span class="mnb-icon">🗺️</span>HARİTA
+  </button>
+  <button class="mnb" id="mnb-list" onclick="mobTab('list')">
+    <span class="mnb-icon">⚔️</span>ÇATIŞMALAR
+  </button>
+  <button class="mnb" id="mnb-detail" onclick="mobTab('detail')">
+    <span class="mnb-icon">📋</span>DETAY
+  </button>
+  <button class="mnb" id="mnb-news" onclick="mobTab('news')">
+    <span class="mnb-icon">📰</span>HABERLER
+  </button>
+</nav>
+
+<!-- PAYLAŞ MODAL -->
+<div id="share-modal">
+  <div class="sm-box">
+    <div class="sm-hdr">
+      <span class="sm-title">🔗 Paylaş</span>
+      <button class="sm-close" onclick="closeShare()">✕</button>
+    </div>
+    <div class="sm-body">
+      <div class="sm-row">
+        <button class="sm-btn" onclick="shareTwitter()">
+          <span class="sm-btn-icon">🐦</span>Twitter/X
+        </button>
+        <button class="sm-btn" onclick="shareWhatsapp()">
+          <span class="sm-btn-icon">💬</span>WhatsApp
+        </button>
+        <button class="sm-btn" onclick="shareTelegram()">
+          <span class="sm-btn-icon">✈️</span>Telegram
+        </button>
+      </div>
+      <div class="sm-link">
+        <input id="share-url" type="text" value="https://livemaptr.com" readonly/>
+        <button onclick="copyLink()">KOPYALA</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

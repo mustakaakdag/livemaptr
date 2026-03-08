@@ -1,0 +1,661 @@
+[08.03.2026 11:30:59] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:30:59] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 11:30:59] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 11:30:59] [INFO]   Ortam : production
+[08.03.2026 11:30:59] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:30:59] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 11:31:03] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 11:31:03] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 11:31:03] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:31:03] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /css/panels.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /css/main.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /css/video.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /css/map.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /js/utils.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /js/map.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /js/panels.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /js/video.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /js/app.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:10 +0000] "GET /favicon.ico HTTP/1.1" 404 52 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:10] [INFO] İstemci bağlandı: -jO9oNbIj6W_jlJZAAAB (127.0.0.1)
+[08.03.2026 11:31:12] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:12 +0000] "GET /api/yayinlar HTTP/1.1" 200 786 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:27] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:27 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:27] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:27 +0000] "GET /api/all HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:28] [INFO] İstemci bağlandı: 9sFthJ5dINoFEC9yAAAD (127.0.0.1)
+[08.03.2026 11:31:29] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:29 +0000] "GET /api/yayinlar HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:42] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:42 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:42] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:42 +0000] "GET /api/all HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:42] [INFO] İstemci bağlandı: yND88tn4k_QfyyivAAAF (127.0.0.1)
+[08.03.2026 11:31:43] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:43 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:43] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:43 +0000] "GET /api/all HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:31:44] [INFO] İstemci bağlandı: cbhNlLRYeoVsHlFxAAAH (127.0.0.1)
+[08.03.2026 11:31:45] [INFO] 127.0.0.1 - - [08/Mar/2026:08:31:45 +0000] "GET /api/yayinlar HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:33:32] [INFO] 127.0.0.1 - - [08/Mar/2026:08:33:32 +0000] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 89 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:33:59] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:36:39] [INFO] 127.0.0.1 - - [08/Mar/2026:08:36:39 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:36:39] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 11:36:39] [INFO] İstemci bağlandı: J2PIPr029C-gsXC9AAAJ (127.0.0.1)
+[08.03.2026 11:36:41] [INFO] 127.0.0.1 - - [08/Mar/2026:08:36:41 +0000] "GET /api/yayinlar HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:36:43] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 11:36:43] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 11:36:43] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:36:43] [INFO] 127.0.0.1 - - [08/Mar/2026:08:36:43 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:38:32] [ERROR] Yakalanmamış istisna: listen EADDRINUSE: address already in use 0.0.0.0:3000
+Error: listen EADDRINUSE: address already in use 0.0.0.0:3000
+    at Server.setupListenHandle [as _listen2] (node:net:1948:16)
+    at listenInCluster (node:net:2005:12)
+    at node:net:2214:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[08.03.2026 11:39:21] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:39:21] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 11:39:21] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 11:39:21] [INFO]   Ortam : production
+[08.03.2026 11:39:21] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:39:21] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 11:39:21] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 11:39:22] [INFO] 9/11 kaynaktan 97 ham haber çekildi
+[08.03.2026 11:39:22] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:39:22] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 11:39:23] [INFO] İstemci bağlandı: nfu8b_3s15DiOjzvAAAB (127.0.0.1)
+[08.03.2026 11:39:29] [INFO] 127.0.0.1 - - [08/Mar/2026:08:39:29 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:39:29] [INFO] 127.0.0.1 - - [08/Mar/2026:08:39:29 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:39:30] [INFO] İstemci bağlandı: cTZi-c_3CbABKMlOAAAD (127.0.0.1)
+[08.03.2026 11:40:23] [INFO] 127.0.0.1 - - [08/Mar/2026:08:40:23 +0000] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 89 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:41:47] [INFO] 127.0.0.1 - - [08/Mar/2026:08:41:47 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:41:47] [INFO] 127.0.0.1 - - [08/Mar/2026:08:41:47 +0000] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 89 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:41:47] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:41:47] [INFO] 127.0.0.1 - - [08/Mar/2026:08:41:47 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:41:48] [INFO] İstemci bağlandı: q3tr-w9xN5-DCiJ4AAAF (127.0.0.1)
+[08.03.2026 11:43:21] [ERROR] Yakalanmamış istisna: listen EADDRINUSE: address already in use 0.0.0.0:3000
+Error: listen EADDRINUSE: address already in use 0.0.0.0:3000
+    at Server.setupListenHandle [as _listen2] (node:net:1948:16)
+    at listenInCluster (node:net:2005:12)
+    at node:net:2214:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[08.03.2026 11:43:57] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:43:57] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 11:43:57] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 11:43:57] [INFO]   Ortam : production
+[08.03.2026 11:43:57] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:43:57] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 11:43:57] [INFO] İstemci bağlandı: bjFeS-ddEiK83CNYAAAB (127.0.0.1)
+[08.03.2026 11:44:01] [INFO] 127.0.0.1 - - [08/Mar/2026:08:44:01 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:44:02] [INFO] İstemci bağlandı: _nsZSqZceETUDwYhAAAD (127.0.0.1)
+[08.03.2026 11:44:02] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 11:44:02] [INFO] 9/11 kaynaktan 95 ham haber çekildi
+[08.03.2026 11:44:02] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:44:02] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 11:44:02] [INFO] 127.0.0.1 - - [08/Mar/2026:08:44:02 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:46:25] [INFO] 127.0.0.1 - - [08/Mar/2026:08:46:25 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:46:25] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:46:25] [INFO] 127.0.0.1 - - [08/Mar/2026:08:46:25 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:46:25] [INFO] İstemci bağlandı: X5PtbmKFtvMgaNnuAAAF (127.0.0.1)
+[08.03.2026 11:48:27] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:51:19] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:51:19] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 11:51:19] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 11:51:19] [INFO]   Ortam : production
+[08.03.2026 11:51:19] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:51:19] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 11:51:23] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 11:51:23] [INFO] 9/11 kaynaktan 95 ham haber çekildi
+[08.03.2026 11:51:23] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:51:23] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 11:51:33] [INFO] 127.0.0.1 - - [08/Mar/2026:08:51:33 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:51:58] [INFO] 127.0.0.1 - - [08/Mar/2026:08:51:58 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:52:00] [INFO] 127.0.0.1 - - [08/Mar/2026:08:52:00 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:52:36] [INFO] 127.0.0.1 - - [08/Mar/2026:08:52:36 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:52:45] [INFO] 127.0.0.1 - - [08/Mar/2026:08:52:45 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:53:30] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:53:30] [INFO] 127.0.0.1 - - [08/Mar/2026:08:53:30 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:54:06] [INFO] 127.0.0.1 - - [08/Mar/2026:08:54:06 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:55:22] [ERROR] Yakalanmamış istisna: listen EADDRINUSE: address already in use 0.0.0.0:3000
+Error: listen EADDRINUSE: address already in use 0.0.0.0:3000
+    at Server.setupListenHandle [as _listen2] (node:net:1948:16)
+    at listenInCluster (node:net:2005:12)
+    at node:net:2214:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[08.03.2026 11:55:49] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:56:16] [INFO] 127.0.0.1 - - [08/Mar/2026:08:56:16 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:56:19] [INFO] 127.0.0.1 - - [08/Mar/2026:08:56:19 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:56:36] [ERROR] Yakalanmamış istisna: listen EADDRINUSE: address already in use 0.0.0.0:3000
+Error: listen EADDRINUSE: address already in use 0.0.0.0:3000
+    at Server.setupListenHandle [as _listen2] (node:net:1948:16)
+    at listenInCluster (node:net:2005:12)
+    at node:net:2214:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[08.03.2026 11:56:53] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:56:53] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 11:56:53] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 11:56:53] [INFO]   Ortam : production
+[08.03.2026 11:56:53] [INFO] ═══════════════════════════════════════════
+[08.03.2026 11:56:53] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 11:56:53] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 11:56:55] [INFO] 9/11 kaynaktan 95 ham haber çekildi
+[08.03.2026 11:56:55] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:56:55] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 11:57:02] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:02 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:07] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:07 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:13] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:13 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:41] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:41 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:53] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:53 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:53] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:53 +0000] "GET /favicon.ico HTTP/1.1" 404 52 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:55] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:55 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:55] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:55 +0000] "GET /favicon.ico HTTP/1.1" 404 52 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:55] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:55 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:55] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:55 +0000] "GET /favicon.ico HTTP/1.1" 404 52 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:55] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:55 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:55] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:55 +0000] "GET /favicon.ico HTTP/1.1" 404 52 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:56] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:56 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:57:56] [INFO] 127.0.0.1 - - [08/Mar/2026:08:57:56 +0000] "GET /favicon.ico HTTP/1.1" 404 52 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:58:30] [INFO] 127.0.0.1 - - [08/Mar/2026:08:58:30 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 11:59:53] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 11:59:58] [INFO] 127.0.0.1 - - [08/Mar/2026:08:59:58 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:00:52] [INFO] 127.0.0.1 - - [08/Mar/2026:09:00:52 +0000] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 89 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:02:53] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:02:53] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 12:02:57] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:02:57] [INFO] 9/11 kaynaktan 80 ham haber çekildi
+[08.03.2026 12:02:57] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:05:03] [INFO] 127.0.0.1 - - [08/Mar/2026:09:05:03 +0000] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 89 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:05:42] [INFO] 127.0.0.1 - - [08/Mar/2026:09:05:42 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:05:42] [INFO] 127.0.0.1 - - [08/Mar/2026:09:05:42 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:05:42] [INFO] 127.0.0.1 - - [08/Mar/2026:09:05:42 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:05:53] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:08:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:08:27 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:08:53] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:08:53] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:08:53] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 12:08:54] [INFO] 9/11 kaynaktan 80 ham haber çekildi
+[08.03.2026 12:08:54] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:09:16] [INFO] 127.0.0.1 - - [08/Mar/2026:09:09:16 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:09:20] [INFO] 127.0.0.1 - - [08/Mar/2026:09:09:20 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:11:45] [ERROR] Yakalanmamış istisna: listen EADDRINUSE: address already in use 0.0.0.0:3000
+Error: listen EADDRINUSE: address already in use 0.0.0.0:3000
+    at Server.setupListenHandle [as _listen2] (node:net:1948:16)
+    at listenInCluster (node:net:2005:12)
+    at node:net:2214:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[08.03.2026 12:11:53] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:13:16] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:13:16] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 12:13:16] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 12:13:16] [INFO]   Ortam : production
+[08.03.2026 12:13:16] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:13:16] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:13:16] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:13:16] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 12:13:17] [INFO] 9/11 kaynaktan 81 ham haber çekildi
+[08.03.2026 12:13:17] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:13:17] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 12:13:23] [INFO] 127.0.0.1 - - [08/Mar/2026:09:13:23 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:13:23] [INFO] 127.0.0.1 - - [08/Mar/2026:09:13:23 +0000] "GET /lib/leaflet/leaflet.min.css HTTP/1.1" 404 68 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:13:23] [INFO] 127.0.0.1 - - [08/Mar/2026:09:13:23 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:13:23] [INFO] 127.0.0.1 - - [08/Mar/2026:09:13:23 +0000] "GET /lib/leaflet/leaflet.min.css HTTP/1.1" 404 68 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:13:23] [INFO] 127.0.0.1 - - [08/Mar/2026:09:13:23 +0000] "GET /lib/leaflet/leaflet.min.js HTTP/1.1" 404 67 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:13:23] [INFO] 127.0.0.1 - - [08/Mar/2026:09:13:23 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:13:23] [INFO] İstemci bağlandı: JVuETD4ZxI3QfzrYAAAB (127.0.0.1)
+[08.03.2026 12:13:23] [INFO] 127.0.0.1 - - [08/Mar/2026:09:13:23 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:16:16] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:17:07] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:07 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:07] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:07 +0000] "GET /lib/leaflet/leaflet.min.css HTTP/1.1" 404 68 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:07] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:07 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:07] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:07 +0000] "GET /lib/leaflet/leaflet.min.css HTTP/1.1" 404 68 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:07] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:07 +0000] "GET /lib/leaflet/leaflet.min.js HTTP/1.1" 404 67 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:07] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:07 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:07] [INFO] İstemci bağlandı: ikrrSphA2-inwcFEAAAD (127.0.0.1)
+[08.03.2026 12:17:08] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:08 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:12] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:12 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:12] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:12 +0000] "GET /lib/leaflet/leaflet.min.css HTTP/1.1" 404 68 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:12] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:12 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:12] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:12 +0000] "GET /lib/leaflet/leaflet.min.css HTTP/1.1" 404 68 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:12] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:12 +0000] "GET /lib/leaflet/leaflet.min.js HTTP/1.1" 404 67 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:12] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:12 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:12] [INFO] İstemci bağlandı: gXb0tuwu7SE5t1kJAAAF (127.0.0.1)
+[08.03.2026 12:17:12] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:12 +0000] "GET /api/all HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:31] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:31 +0000] "GET /api/all HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:17:38] [INFO] 127.0.0.1 - - [08/Mar/2026:09:17:38 +0000] "GET /api/all HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:19:00] [INFO] [Leaflet] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet\dist
+[08.03.2026 12:19:00] [INFO] [MarkerCluster] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet.markercluster\dist
+[08.03.2026 12:19:00] [ERROR] Yakalanmamış istisna: listen EADDRINUSE: address already in use 0.0.0.0:3000
+Error: listen EADDRINUSE: address already in use 0.0.0.0:3000
+    at Server.setupListenHandle [as _listen2] (node:net:1948:16)
+    at listenInCluster (node:net:2005:12)
+    at node:net:2214:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[08.03.2026 12:19:16] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:19:16] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:19:17] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:19:17] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:19:35] [INFO] [Leaflet] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet\dist
+[08.03.2026 12:19:35] [INFO] [MarkerCluster] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet.markercluster\dist
+[08.03.2026 12:19:36] [ERROR] Yakalanmamış istisna: listen EADDRINUSE: address already in use 0.0.0.0:3000
+Error: listen EADDRINUSE: address already in use 0.0.0.0:3000
+    at Server.setupListenHandle [as _listen2] (node:net:1948:16)
+    at listenInCluster (node:net:2005:12)
+    at node:net:2214:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[08.03.2026 12:20:06] [INFO] [Leaflet] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet\dist
+[08.03.2026 12:20:06] [INFO] [MarkerCluster] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet.markercluster\dist
+[08.03.2026 12:20:06] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:20:06] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 12:20:06] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 12:20:06] [INFO]   Ortam : production
+[08.03.2026 12:20:06] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:20:06] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:20:06] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:20:06] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:20:06] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:20:06] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 12:20:09] [INFO] İstemci bağlandı: QZTZeCojMSPT_L2jAAAB (127.0.0.1)
+[08.03.2026 12:20:11] [INFO] 127.0.0.1 - - [08/Mar/2026:09:20:11 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:20:11] [INFO] 127.0.0.1 - - [08/Mar/2026:09:20:11 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:20:11] [INFO] 127.0.0.1 - - [08/Mar/2026:09:20:11 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:20:11] [INFO] 127.0.0.1 - - [08/Mar/2026:09:20:11 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:20:11] [INFO] 127.0.0.1 - - [08/Mar/2026:09:20:11 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:20:11] [INFO] İstemci bağlandı: pIxdz0U8OUMujPOXAAAD (127.0.0.1)
+[08.03.2026 12:20:12] [INFO] 127.0.0.1 - - [08/Mar/2026:09:20:12 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:20:58] [INFO] 127.0.0.1 - - [08/Mar/2026:09:20:58 +0000] "GET /api/all HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:21:02] [INFO] 127.0.0.1 - - [08/Mar/2026:09:21:02 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:21:03] [INFO] 127.0.0.1 - - [08/Mar/2026:09:21:03 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:21:03] [INFO] 127.0.0.1 - - [08/Mar/2026:09:21:03 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:21:03] [INFO] 127.0.0.1 - - [08/Mar/2026:09:21:03 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:21:03] [INFO] 127.0.0.1 - - [08/Mar/2026:09:21:03 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:21:03] [INFO] İstemci bağlandı: kdGUG7fi5hTkWQm4AAAF (127.0.0.1)
+[08.03.2026 12:21:03] [INFO] 127.0.0.1 - - [08/Mar/2026:09:21:03 +0000] "GET /api/all HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:23:06] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:23:24] [INFO] 127.0.0.1 - - [08/Mar/2026:09:23:24 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:25:08] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:25:08] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:25:09] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:25:09] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:25:09] [INFO] 127.0.0.1 - - [08/Mar/2026:09:25:09 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:25:18] [INFO] 127.0.0.1 - - [08/Mar/2026:09:25:18 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:25:20] [INFO] 127.0.0.1 - - [08/Mar/2026:09:25:20 +0000] "GET /api/all HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:27:36] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:30:07] [INFO] [Leaflet] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet\dist
+[08.03.2026 12:30:07] [INFO] [MarkerCluster] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet.markercluster\dist
+[08.03.2026 12:30:07] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:30:07] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 12:30:07] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 12:30:07] [INFO]   Ortam : production
+[08.03.2026 12:30:07] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:30:07] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:30:07] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:30:08] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:30:08] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:30:08] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 12:30:10] [INFO] İstemci bağlandı: J_XOe3AgM9AlebgHAAAB (127.0.0.1)
+[08.03.2026 12:30:11] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:11 +0000] "GET /api/all HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:13] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:13 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:13] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:13 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:13] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:13 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:13] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:13 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:13] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:13 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:27] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:27 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:30:28] [INFO] 127.0.0.1 - - [08/Mar/2026:09:30:28 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:31:21] [INFO] [Leaflet] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet\dist
+[08.03.2026 12:31:21] [INFO] [MarkerCluster] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet.markercluster\dist
+[08.03.2026 12:31:21] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:31:21] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 12:31:21] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 12:31:21] [INFO]   Ortam : production
+[08.03.2026 12:31:21] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:31:21] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:31:21] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:31:22] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:31:22] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:31:22] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 12:32:40] [INFO] [Leaflet] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet\dist
+[08.03.2026 12:32:40] [INFO] [MarkerCluster] npm serve: C:\Users\pc\Desktop\livemaptr\node_modules\leaflet.markercluster\dist
+[08.03.2026 12:32:40] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:32:40] [INFO]   LiveMapTR v2.0.0 başlatıldı
+[08.03.2026 12:32:40] [INFO]   Adres : http://0.0.0.0:3000
+[08.03.2026 12:32:40] [INFO]   Ortam : production
+[08.03.2026 12:32:40] [INFO] ═══════════════════════════════════════════
+[08.03.2026 12:32:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:32:40] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:32:41] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:32:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:32:41] [INFO] İlk veri çekimi tamamlandı
+[08.03.2026 12:33:00] [INFO] 127.0.0.1 - - [08/Mar/2026:09:33:00 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:33:01] [INFO] 127.0.0.1 - - [08/Mar/2026:09:33:01 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:33:01] [INFO] 127.0.0.1 - - [08/Mar/2026:09:33:01 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:33:01] [INFO] 127.0.0.1 - - [08/Mar/2026:09:33:01 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:33:01] [INFO] 127.0.0.1 - - [08/Mar/2026:09:33:01 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:40] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:35:49] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:49 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:49] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:49 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:49] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:49 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:49] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:49 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:49] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:49 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:49] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:49 +0000] "GET /favicon.ico HTTP/1.1" 404 51 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:55] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:55 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:55] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:55 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:55] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:55 +0000] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 88 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:55] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:55 +0000] "GET /lib/markercluster/leaflet.markercluster.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:35:55] [INFO] 127.0.0.1 - - [08/Mar/2026:09:35:55 +0000] "GET /lib/leaflet/leaflet.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:37:42] [INFO] 127.0.0.1 - - [08/Mar/2026:09:37:42 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:37:42] [INFO] 127.0.0.1 - - [08/Mar/2026:09:37:42 +0000] "GET /lib/leaflet/leaflet.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:37:42] [INFO] 127.0.0.1 - - [08/Mar/2026:09:37:42 +0000] "GET /lib/markercluster/MarkerCluster.Default.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:37:42] [INFO] 127.0.0.1 - - [08/Mar/2026:09:37:42 +0000] "GET /lib/leaflet/leaflet.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:37:42] [INFO] 127.0.0.1 - - [08/Mar/2026:09:37:42 +0000] "GET /lib/markercluster/leaflet.markercluster.js HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[08.03.2026 12:38:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:38:40] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:38:42] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:38:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:41:40] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:44:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:44:40] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:44:42] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:44:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:47:40] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:50:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:50:40] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:50:41] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:50:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:53:40] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:56:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 12:56:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 12:56:41] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 12:56:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 12:59:40] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:02:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:02:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:02:41] [INFO] 9/11 kaynaktan 96 ham haber çekildi
+[08.03.2026 13:02:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:05:40] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:08:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:08:40] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:08:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 13:08:41] [INFO] 9/11 kaynaktan 82 ham haber çekildi
+[08.03.2026 13:08:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:11:40] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:14:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:14:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:14:41] [INFO] 9/11 kaynaktan 97 ham haber çekildi
+[08.03.2026 13:14:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:17:40] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:20:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:20:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:20:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 13:20:42] [INFO] 9/11 kaynaktan 82 ham haber çekildi
+[08.03.2026 13:20:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:23:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:26:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:26:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:26:41] [INFO] 9/11 kaynaktan 97 ham haber çekildi
+[08.03.2026 13:26:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:29:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:32:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:32:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:32:41] [INFO] 9/11 kaynaktan 98 ham haber çekildi
+[08.03.2026 13:32:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:35:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:38:40] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:38:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:38:41] [INFO] 9/11 kaynaktan 98 ham haber çekildi
+[08.03.2026 13:38:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:41:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:44:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:44:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:44:42] [INFO] 9/11 kaynaktan 98 ham haber çekildi
+[08.03.2026 13:44:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:47:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:50:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:50:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:50:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 13:50:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:53:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:56:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 13:56:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 13:56:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 13:56:41] [INFO] 9/11 kaynaktan 85 ham haber çekildi
+[08.03.2026 13:56:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 13:59:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:02:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:02:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:02:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 14:02:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:05:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:08:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:08:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:08:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 14:08:41] [INFO] 9/11 kaynaktan 85 ham haber çekildi
+[08.03.2026 14:08:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:11:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:14:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:14:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:14:42] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 14:14:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:17:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:20:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:20:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:20:42] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 14:20:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:23:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:26:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:26:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:26:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 14:26:42] [INFO] 9/11 kaynaktan 85 ham haber çekildi
+[08.03.2026 14:26:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:29:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:32:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:32:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:32:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 14:32:42] [INFO] 9/11 kaynaktan 85 ham haber çekildi
+[08.03.2026 14:32:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:35:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:38:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:38:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:38:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 14:38:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:41:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:44:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:44:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:44:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 14:44:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:47:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:50:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:50:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:50:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 14:50:41] [INFO] 9/11 kaynaktan 85 ham haber çekildi
+[08.03.2026 14:50:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:53:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:56:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 14:56:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 14:56:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 14:56:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 14:59:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:02:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:02:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:02:42] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 15:02:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:05:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:08:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:08:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:08:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 15:08:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:11:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:14:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:14:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:14:42] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 15:14:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:17:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:20:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:20:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:20:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 15:20:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:23:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:26:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:26:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:26:42] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 15:26:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:29:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:32:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:32:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:32:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 15:32:41] [INFO] 9/11 kaynaktan 85 ham haber çekildi
+[08.03.2026 15:32:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:35:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:38:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:38:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:38:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 15:38:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:41:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:44:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:44:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:44:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 15:44:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:47:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:50:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:50:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:50:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 15:50:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:53:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:56:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 15:56:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 15:56:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 15:56:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 15:59:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:02:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:02:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:02:42] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 16:02:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:05:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:08:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:08:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:08:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 16:08:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:11:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:14:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:14:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:14:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 16:14:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:17:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:20:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:20:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:20:42] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 16:20:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:23:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:26:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:26:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:26:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 16:26:41] [INFO] 9/11 kaynaktan 85 ham haber çekildi
+[08.03.2026 16:26:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:29:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:32:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:32:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:32:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 16:32:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:35:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:38:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:38:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:38:41] [INFO] 9/11 kaynaktan 100 ham haber çekildi
+[08.03.2026 16:38:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:41:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:44:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:44:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:44:41] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 16:44:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:47:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:50:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:50:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:50:41] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 16:50:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:53:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:56:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 16:56:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 16:56:41] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 16:56:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 16:59:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:02:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 17:02:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 17:02:42] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 17:02:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:05:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:08:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 17:08:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 17:08:42] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 17:08:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:11:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:14:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 17:14:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 17:14:42] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 17:14:42] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:17:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:20:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 17:20:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 17:20:41] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 17:20:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:23:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:26:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 17:26:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 17:26:41] [INFO] 9/11 kaynaktan 99 ham haber çekildi
+[08.03.2026 17:26:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:29:41] [INFO] Sosyal medya trend analizi yapılıyor...
+[08.03.2026 17:32:41] [INFO] 11 RSS kaynağından haber çekiliyor...
+[08.03.2026 17:32:41] [WARN] RSS çekme hatası [Habertürk]: Unable to parse XML.
+[08.03.2026 17:32:41] [WARN] RSS çekme hatası [Euronews TR]: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: 
+[08.03.2026 17:32:42] [INFO] 9/11 kaynaktan 84 ham haber çekildi
+[08.03.2026 17:32:42] [INFO] Sosyal medya trend analizi yapılıyor...

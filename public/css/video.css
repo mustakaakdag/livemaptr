@@ -1,0 +1,280 @@
+/**
+ * LiveMapTR - Video Kenar Çubuğu CSS
+ * Canlı yayın paneli ve video kartı stilleri.
+ */
+
+/* ── VIDEO KENAR ÇUBUĞU ───────────────────────────────────────────── */
+.video-sidebar {
+  width: 260px;
+  min-width: 220px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.video-sidebar-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-base);
+  flex-shrink: 0;
+}
+
+/* CANLI etiketi */
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: var(--text-secondary);
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-red);
+  animation: liveDotPulse 1.8s ease-out infinite;
+}
+
+@keyframes liveDotPulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+  70% { box-shadow: 0 0 0 7px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Video listesi */
+.video-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── VİDEO KARTI ──────────────────────────────────────────────────── */
+.video-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--trans-fast);
+  position: relative;
+  cursor: pointer;
+}
+
+.video-card:hover {
+  border-color: var(--border-bright);
+  box-shadow: var(--shadow-card);
+}
+
+/* Kanal başlığı */
+.video-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--border);
+}
+
+.video-channel-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+.video-live-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--accent-red);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.video-live-tag::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-red);
+  animation: liveDotPulse 1.8s ease-out infinite;
+}
+
+/* Video embed alanı */
+.video-embed-area {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.video-embed-area iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none; /* Hover olmadan tıklamayı engelle */
+}
+
+.video-embed-area iframe.loaded {
+  opacity: 1;
+}
+
+/* Hover olmadan devre dışı görünüm */
+.video-embed-area .video-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0a0e1a 0%, #141929 100%);
+  transition: opacity var(--trans-med);
+}
+
+.video-embed-area .video-placeholder-icon {
+  font-size: 28px;
+  opacity: 0.4;
+}
+
+.video-embed-area .video-placeholder-text {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0 12px;
+}
+
+/* Hover durumu */
+.video-card:hover .video-embed-area iframe {
+  pointer-events: all; /* Hover'da etkileşime aç */
+}
+
+.video-card.expanded .video-embed-area {
+  aspect-ratio: 16 / 9;
+}
+
+.video-card.expanded .video-embed-area iframe {
+  pointer-events: all;
+  opacity: 1;
+}
+
+/* Aktifleştirme butonu */
+.video-activate-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  z-index: 10;
+}
+
+.video-card.expanded .video-activate-btn,
+.video-card.active .video-activate-btn {
+  display: none;
+}
+
+.video-activate-btn:hover {
+  background: rgba(0,0,0,0.4);
+}
+
+.video-play-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: white;
+  transition: transform var(--trans-fast);
+}
+
+.video-activate-btn:hover .video-play-icon {
+  transform: scale(1.1);
+}
+
+.video-activate-text {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+}
+
+/* Alt bilgi */
+.video-card-footer {
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.video-hint {
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+.video-mute-hint {
+  font-size: 9px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .video-sidebar {
+    width: 100%;
+    max-width: none;
+    height: 200px;
+    flex-direction: row;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .video-list {
+    flex-direction: row;
+    padding: 6px;
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+
+  .video-card {
+    min-width: 200px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .video-sidebar { display: none; }
+}
