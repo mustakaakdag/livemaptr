@@ -74,39 +74,61 @@ class GdeltService {
     try {
       logger.info('GDELT: Olaylar cekiliyor...');
 
-      // GDELT Doc API — son 24 saatin çatışma haberleri
-      const queries = [
-        'airstrike', 'missile', 'conflict', 'Ukraine',
-        'Gaza', 'Sudan', 'Yemen', 'Israel', 'Houthi',
-      ];
-      const query = queries[Math.floor(Date.now() / (10*60*1000)) % queries.length];
-      const url = `https://api.gdeltproject.org/api/v2/doc/doc?query=${query}&mode=artlist&maxrecords=50&format=json&timespan=1d&sort=DateDesc`;
+      // GDELT Event DB API — koordinatlı olay verisi
+      // Format: YYYYMMDD
+      const now = new Date();
+      const pad = n => String(n).padStart(2,'0');
+      const dateStr = `${now.getUTCFullYear()}${pad(now.getUTCMonth()+1)}${pad(now.getUTCDate())}`;
+      const url = `https://api.gdeltproject.org/api/v2/tv/tv?query=conflict%20war%20attack&mode=timelinevol&format=json&dateres=day&startdatetime=${dateStr}000000&enddatetime=${dateStr}235959&maxrecords=50`;
 
-      const data = await httpsGet(url);
+      // EventDB CSV'den koordinatlı veri cek - simge JSON endpoint
+      const geoUrl = `http://data.gdeltproject.org/gdeltv2/${dateStr}000000.export.CSV.zip`;
+
+      // Alternatif: GDELT GKG ile konum bazlı
+      const eventUrl = `https://api.gdeltproject.org/api/v2/doc/doc?query=airstrike&mode=artlist&maxrecords=50&format=json&sort=DateDesc`;
+      const data = await httpsGet(eventUrl);
       const articles = data.articles || [];
       logger.info(`GDELT: ${articles.length} makale alindi`);
+
+      // Conflict bölgelerine gore manuel koordinat ata
+      const conflictCoords = {
+        iran_israel: { lat: 31.5, lng: 34.8 },
+        gaza:        { lat: 31.35, lng: 34.3 },
+        ukraine:     { lat: 48.5, lng: 31.2 },
+        gulf_nuclear:{ lat: 25.3, lng: 55.4 },
+        sudan:       { lat: 15.5, lng: 32.5 },
+        drcongo:     { lat: -4.3, lng: 15.3 },
+        yemen:       { lat: 15.3, lng: 44.2 },
+        myanmar:     { lat: 19.7, lng: 96.1 },
+        sahel:       { lat: 13.5, lng: -2.1 },
+        haiti:       { lat: 18.9, lng: -72.3 },
+        syria:       { lat: 34.8, lng: 38.9 },
+        ethiopia:    { lat: 9.1, lng: 40.5 },
+      };
 
       this._events = articles
         .filter(a => a.title && a.url)
         .map((a, i) => {
           const conflictId = detectConflict(a.title + ' ' + (a.sourcecountry || ''));
+          const coords = conflictId ? conflictCoords[conflictId] : null;
+          // Kucuk rastgele offset ekle - ayni noktaya yigilmasin
+          const jitter = () => (Math.random() - 0.5) * 1.5;
           return {
             id: 'gdelt_' + i + '_' + Date.now(),
             title: a.title,
             url: a.url,
             source: a.domain || 'GDELT',
             publishedAt: a.seendate || new Date().toISOString(),
-            lat: parseFloat(a.latitude) || null,
-            lng: parseFloat(a.longitude) || null,
+            lat: coords ? coords.lat + jitter() : null,
+            lng: coords ? coords.lng + jitter() : null,
             country: a.sourcecountry || '',
-            language: a.language || 'en',
-            tone: parseFloat(a.tone) || 0, // negatif = kötü haber
+            tone: parseFloat(a.tone) || 0,
             conflictId,
-            severity: a.tone < -5 ? 'critical' : a.tone < -2 ? 'high' : 'medium',
+            severity: (a.tone || 0) < -5 ? 'critical' : (a.tone || 0) < -2 ? 'high' : 'medium',
             type: 'gdelt',
           };
         })
-        .filter(e => e.conflictId || (e.lat && e.lng));
+        .filter(e => e.lat && e.lng && e.conflictId);
 
       this._lastFetch = Date.now();
       logger.info(`GDELT: ${this._events.length} olay islendi`);
