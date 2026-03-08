@@ -76,14 +76,11 @@ class GdeltService {
 
       // GDELT Doc API — son 24 saatin çatışma haberleri
       const queries = [
-        'airstrike missile conflict attack war',
-        'Ukraine Gaza Sudan Yemen Myanmar',
-        'Israel Iran Houthi Russia military',
+        'airstrike', 'missile', 'conflict', 'Ukraine',
+        'Gaza', 'Sudan', 'Yemen', 'Israel', 'Houthi',
       ];
-
       const query = queries[Math.floor(Date.now() / (10*60*1000)) % queries.length];
-      const encoded = encodeURIComponent(query);
-      const url = `https://api.gdeltproject.org/api/v2/doc/doc?query=${encoded}&mode=artlist&maxrecords=50&format=json&timespan=1d&sort=DateDesc`;
+      const url = `https://api.gdeltproject.org/api/v2/doc/doc?query=${query}&mode=artlist&maxrecords=50&format=json&timespan=1d&sort=DateDesc`;
 
       const data = await httpsGet(url);
       const articles = data.articles || [];
