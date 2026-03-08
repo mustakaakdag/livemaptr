@@ -12,7 +12,7 @@ const apiRoutes = require('./routes/api');
 const newsService    = require('./services/newsService');
 const economyService = require('./services/economyService');
 const socialService  = require('./services/socialService');
-const acledService  = require('./services/acledService');
+const gdeltService   = require('./services/gdeltService');
 const newsApiService = require('./services/newsApiService');
 
 const app = express();
@@ -77,20 +77,22 @@ setInterval(async () => {
 
 
 // ACLED — ilk fetch + periyodik guncelleme (her 15 dk)
-if (acledService.isEnabled) {
-  acledService.fetchEvents()
-    .then(() => logger.info('ACLED: Ilk veri yuklendi, ' + acledService.getStats().total + ' olay'))
-    .catch(e => logger.warn('ACLED ilk fetch: ' + e.message));
+// GDELT — her 10 dakikada güncelle
+gdeltService.fetchEvents()
+  .then(() => logger.info('GDELT: Ilk veri yuklendi, ' + gdeltService.getStats().total + ' olay'))
+  .catch(e => logger.warn('GDELT ilk yukleme hatasi: ' + e.message));
 
-  setInterval(async () => {
-    try {
-      await acledService.fetchEvents();
-      const markers = acledService.getMapMarkers();
-      const stats   = acledService.getStats();
-      io.emit('acled_updated', { markers, stats, zaman: new Date().toISOString() });
-      logger.info('ACLED guncellendi: ' + stats.total + ' olay yayinlandi');
-    } catch(e) { logger.error('ACLED dongusu: ' + e.message); }
-  }, 15 * 60 * 1000);
+setInterval(async () => {
+  try {
+    await gdeltService.fetchEvents();
+    const markers = gdeltService.getMapMarkers();
+    const stats   = gdeltService.getStats();
+    io.emit('gdelt_updated', { markers, stats, zaman: new Date().toISOString() });
+    logger.info('GDELT: Guncellendi, ' + markers.length + ' konum markeri');
+  } catch(e) {
+    logger.warn('GDELT interval hata: ' + e.message);
+  }
+}, 10 * 60 * 1000);, 15 * 60 * 1000);
 }
 
 // NewsAPI periyodik döngüsü — her 5 dakikada rotasyonlu sorgu

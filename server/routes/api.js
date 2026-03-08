@@ -19,10 +19,11 @@ router.get('/conflicts/hotspots', conflictCtrl.getHotspots);
 router.get('/conflicts/:id',      conflictCtrl.getById);
 
 // ACLED — Gerçek Çatışma Verisi
-const acledCtrl = require('../controllers/acledController');
-router.get('/acled/events',       acledCtrl.getEvents);
-router.get('/acled/stats',        acledCtrl.getStats);
-router.get('/acled/status',       acledCtrl.getStatus);
+const gdeltService = require('../services/gdeltService');
+router.get('/gdelt/events',   async (req,res) => { try { const e = await gdeltService.fetchEvents(); res.json({events:e,stats:gdeltService.getStats()}); } catch(e){res.status(500).json({error:e.message});} });
+router.get('/gdelt/markers',  (req,res) => res.json({markers:gdeltService.getMapMarkers()}));
+router.get('/gdelt/stats',    (req,res) => res.json(gdeltService.getStats()));
+router.get('/gdelt/conflict/:id', (req,res) => res.json({events:gdeltService.getByConflict(req.params.id)}));
 
 module.exports = router;
 

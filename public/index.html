@@ -1313,7 +1313,7 @@ async function loadNewsApi() {
 
 // ═══ ACLED MARKERS ═══════════════════════════════════════════
 S.acledM = [];
-function addAcledMarkers(events){
+function addGdeltMarkers(events){
   // Eskilerı temizle
   S.acledM.forEach(m=>S.map.removeLayer(m));
   S.acledM=[];
@@ -1337,7 +1337,7 @@ function addAcledMarkers(events){
   });
 }
 
-async function loadAcled(){
+async function loadGdelt(){
   try{
     const res=await fetch('/api/acled/events?limit=300');
     const j=await res.json();
@@ -1470,7 +1470,7 @@ function initDomListeners(){
   // Map filters -> initDomListeners
 }
 // START
-waitL(()=>{initDomListeners();initMap();initSocket();loadAll();loadNewsApi();loadAcled();initRiskPulse();startAlarmLoop();});
+waitL(()=>{initDomListeners();initMap();initSocket();loadAll();loadNewsApi();loadGdelt();initRiskPulse();startAlarmLoop();});
 </script>
 
 <!-- MOBİL NAV -->
