@@ -98,18 +98,13 @@ class ReliefWebService {
 
       const body = {
         limit: 100,
-        sort: ['date:desc'],
-        fields: {
-          include: ['title', 'date', 'source', 'country', 'url_alias', 'status']
-        },
-        filter: {
-          field: 'country',
-          value: [
-            'Ukraine', 'Sudan', 'Yemen', 'Myanmar', 'Syria',
-            'Palestinian Territory', 'Haiti', 'Ethiopia',
-            'Democratic Republic of the Congo', 'Mali', 'Lebanon', 'Iraq'
-          ],
+        preset: 'latest',
+        query: {
+          value: 'Ukraine OR Sudan OR Yemen OR Myanmar OR Syria OR Gaza OR Haiti OR Ethiopia OR Congo OR Lebanon',
           operator: 'OR'
+        },
+        fields: {
+          include: ['title', 'date', 'source', 'country', 'url_alias']
         }
       };
 
