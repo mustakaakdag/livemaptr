@@ -116,6 +116,9 @@ class ReliefWebService {
       const data = await post('/v1/reports?appname=livemaptr', body);
       const items = (data.data || []);
       logger.info(`ReliefWeb: ${items.length} rapor alindi`);
+      if (items.length === 0) {
+        logger.warn('ReliefWeb debug - totalCount: ' + (data.totalCount || 0) + ' | error: ' + JSON.stringify(data.error || null));
+      }
 
       const jitter = () => (Math.random() - 0.5) * 1.2;
 

@@ -16,6 +16,7 @@ const gdeltService   = require('./services/gdeltService');
 const newsApiService = require('./services/newsApiService');
 
 const app = express();
+app.set('trust proxy', 1); // Render.com proxy
 const server = http.createServer(app);
 const io = new SocketIO(server, {
   cors: { origin: '*', methods: ['GET', 'POST'] },
@@ -80,8 +81,8 @@ setInterval(async () => {
 // GDELT — her 10 dakikada güncelle
 // GDELT 15sn gecikmeli baslat (rate limit onlemek icin)
 gdeltService.fetchEvents(15000)
-  .then(() => logger.info('GDELT: Ilk veri yuklendi, ' + gdeltService.getStats().total + ' olay'))
-  .catch(e => logger.warn('GDELT ilk yukleme hatasi: ' + e.message));
+  .then(() => logger.info('ReliefWeb: Ilk veri yuklendi, ' + gdeltService.getStats().total + ' olay'))
+  .catch(e => logger.warn('ReliefWeb ilk yukleme hatasi: ' + e.message));
 
 setInterval(async () => {
   try {
@@ -89,9 +90,9 @@ setInterval(async () => {
     const markers = gdeltService.getMapMarkers();
     const stats   = gdeltService.getStats();
     io.emit('gdelt_updated', { markers, stats, zaman: new Date().toISOString() });
-    logger.info('GDELT: Guncellendi, ' + markers.length + ' konum markeri');
+    logger.info('ReliefWeb: Guncellendi, ' + markers.length + ' konum markeri');
   } catch(e) {
-    logger.warn('GDELT interval hata: ' + e.message);
+    logger.warn('ReliefWeb interval hata: ' + e.message);
   }
 }, 10 * 60 * 1000);
 
