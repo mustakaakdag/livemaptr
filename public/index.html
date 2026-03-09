@@ -746,14 +746,16 @@ function renderFeed(events){
   document.getElementById('feed-cnt').textContent=events.length+' olay';
   if(!events.length){el.innerHTML='<div class="ld" style="width:200px"><span>OLAY YOK</span></div>';return;}
   el.innerHTML=events.map(ev=>`
-    <div class="evc sv-${ev.severity}" data-cid="${esc(ev.conflictId||'')}">
-      <div class="ev-top"><span class="ev-ico">${esc(ev.icon||'!')}</span><span class="ev-rg">${esc(ev.region||'')}</span><span class="ev-t">${rel(ev.timestamp)}</span></div>
-      <div class="ev-txt">${esc(ev.text)}</div>
+    <div class="evc sv-${ev.severity||'low'}" data-cid="${esc(ev.conflictId||'')}" data-url="${esc(ev.url||'')}">
+      <div class="ev-top"><span class="ev-ico">${esc(ev.icon||'📰')}</span><span class="ev-rg">${esc(ev.region||ev.source||'')}</span><span class="ev-t">${rel(ev.timestamp||ev.publishedAt)}</span></div>
+      <div class="ev-txt">${esc(ev.text||ev.title||'')}</div>
     </div>`).join('');
   el.querySelectorAll('.evc').forEach(card=>{
     card.addEventListener('click',()=>{
+      const url=card.dataset.url;
       const cid=card.dataset.cid;
-      if(cid){const c=S.conflicts.find(x=>x.id===cid);if(c){selConflict(c);flyTo(c);}}
+      if(url) window.open(url,'_blank');
+      else if(cid){const c=S.conflicts.find(x=>x.id===cid);if(c){selConflict(c);flyTo(c);}}
     });
   });
   // ticker
@@ -1348,23 +1350,38 @@ function addGdeltMarkers(markers){
 }
 
 async function loadGdelt(){
-  // ReliefWeb kaldırıldı - NewsAPI haberleri marker olarak ekleniyor
   try{
-    const res=await fetch('/api/newsapi/latest');
-    const j=await res.json();
-    const articles = j.data||[];
-    const markers = articles.filter(a=>a.lat&&a.lng).map(a=>({
-      id:'na_'+a.id, lat:a.lat, lng:a.lng,
-      title:a.title, source:a.source, url:a.url,
-      publishedAt:a.publishedAt, severity:a.severity||'medium',
-      conflictId:a.conflictId, type:'news', credibilityScore:a.credibilityScore||70
-    }));
+    // Harita markerleri
+    const [mRes, lRes] = await Promise.all([
+      fetch('/api/newsapi/markers').then(r=>r.json()),
+      fetch('/api/newsapi/latest').then(r=>r.json()),
+    ]);
+    // Markerları haritaya ekle
+    const markers = (mRes.ok && mRes.data) ? mRes.data : [];
     if(markers.length){
       addGdeltMarkers(markers);
       document.getElementById('ms-hnews').textContent=markers.length;
-      toast(markers.length+' haber haritada gösterildi','green',2500);
     }
-  }catch(e){ console.warn('NewsAPI marker load:',e); }
+    // Feed'i haberlerle doldur
+    const articles = (lRes.ok && lRes.data) ? lRes.data : [];
+    if(articles.length){
+      const feedEvents = articles.slice(0,30).map(a=>({
+        icon: a.severity==='critical'?'🔴':a.severity==='high'?'🟠':a.severity==='medium'?'🟡':'📰',
+        region: a.source||'Uluslararası',
+        timestamp: a.publishedAt,
+        text: a.title,
+        severity: a.severity||'medium',
+        conflictId: a.conflictId||'',
+        url: a.url,
+      }));
+      // Mevcut event'lerle birleştir
+      const combined = [...feedEvents, ...(S.events||[])].slice(0,50);
+      renderFeed(combined);
+      document.getElementById('sc-haber').textContent=articles.length;
+    }
+    if(markers.length||articles.length)
+      toast(markers.length+' marker, '+articles.length+' haber yüklendi','green',2500);
+  }catch(e){ console.warn('NewsAPI yükleme hatası:',e); }
 }
 
 

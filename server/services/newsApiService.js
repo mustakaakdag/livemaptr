@@ -81,6 +81,23 @@ function fetchUrl(url) {
   });
 }
 
+
+// Çatışma ID → merkez koordinat (marker için fallback)
+const CONFLICT_COORDS = {
+  iran_israel:  { lat: 32.5,  lng: 35.5,  name: 'İsrail/İran' },
+  gaza:         { lat: 31.35, lng: 34.30, name: 'Gazze' },
+  ukraine:      { lat: 49.0,  lng: 32.0,  name: 'Ukrayna' },
+  gulf_nuclear: { lat: 26.0,  lng: 54.0,  name: 'Körfez' },
+  sudan:        { lat: 15.5,  lng: 32.5,  name: 'Sudan' },
+  drcongo:      { lat: -4.3,  lng: 15.3,  name: 'DR Kongo' },
+  yemen:        { lat: 15.3,  lng: 44.2,  name: 'Yemen' },
+  myanmar:      { lat: 19.7,  lng: 96.1,  name: 'Myanmar' },
+  sahel:        { lat: 13.5,  lng: -2.1,  name: 'Sahel' },
+  haiti:        { lat: 18.9,  lng: -72.3, name: 'Haiti' },
+  syria:        { lat: 34.8,  lng: 38.9,  name: 'Suriye' },
+  ethiopia:     { lat: 9.1,   lng: 40.5,  name: 'Etiyopya' },
+};
+
 class NewsApiService {
   constructor() {
     this._lastGroupIdx = 0;
@@ -175,27 +192,40 @@ class NewsApiService {
     return this._allArticles.filter(a => a.conflictId === conflictId).slice(0, 10);
   }
 
-  // Harita markerları için (lokasyonu olanlar)
+  // Harita markerları için (lokasyonu olanlar + conflictId olanlar)
   getMapMarkers() {
+    const jitter = () => (Math.random() - 0.5) * 1.5;
     return this._allArticles
-      .filter(a => a.location)
-      .map(a => ({
-        id: a.id,
-        lat: a.location.lat,
-        lng: a.location.lng,
-        locationName: a.location.locationName,
-        title: a.title,
-        source: a.source,
-        url: a.url,
-        publishedAt: a.publishedAt,
-        category: a.category,
-        severity: a.severity,
-        isBreaking: a.isBreaking,
-        imageUrl: a.imageUrl,
-        conflictId: a.conflictId,
-        credibilityScore: 75,
-        type: 'newsapi',
-      }));
+      .filter(a => a.location || a.conflictId)
+      .map(a => {
+        let lat, lng, locationName;
+        if (a.location) {
+          lat = a.location.lat;
+          lng = a.location.lng;
+          locationName = a.location.locationName;
+        } else {
+          const coord = CONFLICT_COORDS[a.conflictId];
+          if (!coord) return null;
+          lat = coord.lat + jitter();
+          lng = coord.lng + jitter();
+          locationName = coord.name;
+        }
+        return {
+          id: a.id,
+          lat, lng, locationName,
+          title: a.title,
+          source: a.source,
+          url: a.url,
+          publishedAt: a.publishedAt,
+          category: a.category,
+          severity: a.severity,
+          isBreaking: a.isBreaking,
+          imageUrl: a.imageUrl,
+          conflictId: a.conflictId,
+          credibilityScore: 75,
+          type: 'newsapi',
+        };
+      }).filter(Boolean);
   }
 
   // Son haberleri feed için getir
