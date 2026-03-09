@@ -12,7 +12,6 @@ const apiRoutes = require('./routes/api');
 const newsService    = require('./services/newsService');
 const economyService = require('./services/economyService');
 const socialService  = require('./services/socialService');
-const gdeltService   = require('./services/gdeltService');
 const newsApiService = require('./services/newsApiService');
 
 const app = express();
@@ -77,24 +76,7 @@ setInterval(async () => {
 }, config.refresh.social);
 
 
-// ACLED — ilk fetch + periyodik guncelleme (her 15 dk)
-// GDELT — her 10 dakikada güncelle
-// GDELT 15sn gecikmeli baslat (rate limit onlemek icin)
-gdeltService.fetchEvents(15000)
-  .then(() => logger.info('ReliefWeb: Ilk veri yuklendi, ' + gdeltService.getStats().total + ' olay'))
-  .catch(e => logger.warn('ReliefWeb ilk yukleme hatasi: ' + e.message));
-
-setInterval(async () => {
-  try {
-    await gdeltService.fetchEvents();
-    const markers = gdeltService.getMapMarkers();
-    const stats   = gdeltService.getStats();
-    io.emit('gdelt_updated', { markers, stats, zaman: new Date().toISOString() });
-    logger.info('ReliefWeb: Guncellendi, ' + markers.length + ' konum markeri');
-  } catch(e) {
-    logger.warn('ReliefWeb interval hata: ' + e.message);
-  }
-}, 10 * 60 * 1000);
+// ReliefWeb kaldırıldı
 
 // NewsAPI periyodik döngüsü — her 5 dakikada rotasyonlu sorgu
 const NEWSAPI_INTERVAL = parseInt(process.env.NEWSAPI_REFRESH_INTERVAL, 10) || 300000;
