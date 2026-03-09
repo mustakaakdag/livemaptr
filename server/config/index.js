@@ -26,17 +26,22 @@ const config = {
   log: { level: process.env.LOG_LEVEL || 'info' },
 
   rssSources: [
-    { url: 'https://www.ntv.com.tr/son-dakika.rss',             name: 'NTV',           credibility: 85 },
-    { url: 'https://www.haberturk.com/rss/haber.xml',           name: 'Habertürk',     credibility: 82 },
-    { url: 'https://www.hurriyet.com.tr/rss/gundem',             name: 'Hürriyet',      credibility: 80 },
-    { url: 'https://www.sabah.com.tr/rss/anasayfa.xml',         name: 'Sabah',         credibility: 78 },
-    { url: 'https://www.cumhuriyet.com.tr/rss/son_dakika.xml',  name: 'Cumhuriyet',    credibility: 80 },
-    { url: 'https://www.trthaber.com/sondakika.rss',            name: 'TRT Haber',     credibility: 88 },
-    { url: 'https://feeds.bbci.co.uk/turkce/rss.xml',           name: 'BBC Türkçe',    credibility: 90 },
-    { url: 'https://www.aa.com.tr/tr/rss/default?cat=guncel',  name: 'Anadolu Ajansı',credibility: 87 },
-    { url: 'https://tr.euronews.com/rss',                        name: 'Euronews TR',   credibility: 83 },
-    { url: 'https://www.bloomberght.com/rss',                   name: 'Bloomberg HT',  credibility: 88 },
-    { url: 'https://www.milliyet.com.tr/rss/rssNew/sondakikaRss.xml', name: 'Milliyet', credibility: 79 },
+    // Türk haber kaynakları
+    { url: 'https://www.trthaber.com/sondakika.rss',                        name: 'TRT Haber',        credibility: 88 },
+    { url: 'https://www.aa.com.tr/tr/rss/default?cat=guncel',               name: 'Anadolu Ajansı',   credibility: 87 },
+    { url: 'https://www.ntv.com.tr/son-dakika.rss',                         name: 'NTV',              credibility: 85 },
+    { url: 'https://www.haberturk.com/rss/kategori/dunya.xml',              name: 'Habertürk Dünya',  credibility: 82 },
+    { url: 'https://www.haberturk.com/rss/kategori/gundem.xml',             name: 'Habertürk Gündem', credibility: 82 },
+    { url: 'https://www.hurriyet.com.tr/rss/gundem',                        name: 'Hürriyet',         credibility: 80 },
+    { url: 'https://www.cumhuriyet.com.tr/rss/son_dakika.xml',              name: 'Cumhuriyet',       credibility: 80 },
+    { url: 'https://www.milliyet.com.tr/rss/rssNew/sondakikaRss.xml',       name: 'Milliyet',         credibility: 79 },
+    { url: 'https://www.sabah.com.tr/rss/anasayfa.xml',                     name: 'Sabah',            credibility: 78 },
+    { url: 'https://www.ensonhaber.com/rss/dunya.xml',                      name: 'Ensonhaber Dünya', credibility: 76 },
+    { url: 'https://www.ensonhaber.com/rss/gundem.xml',                     name: 'Ensonhaber Gündem',credibility: 76 },
+    // Uluslararası kaynaklar
+    { url: 'https://feeds.bbci.co.uk/turkce/rss.xml',                       name: 'BBC Türkçe',       credibility: 90 },
+    { url: 'https://tr.euronews.com/rss',                                    name: 'Euronews TR',      credibility: 83 },
+    { url: 'https://www.bloomberght.com/rss',                                name: 'Bloomberg HT',     credibility: 88 },
   ],
 };
 

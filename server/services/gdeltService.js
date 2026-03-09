@@ -100,24 +100,16 @@ class ReliefWebService {
         limit: 100,
         sort: ['date:desc'],
         fields: {
-          include: ['title', 'date', 'source', 'country', 'url', 'status']
+          include: ['title', 'date', 'source', 'country', 'url_alias', 'status']
         },
         filter: {
-          operator: 'OR',
-          conditions: [
-            { field: 'country.iso3', value: 'UKR' },
-            { field: 'country.iso3', value: 'SDN' },
-            { field: 'country.iso3', value: 'YEM' },
-            { field: 'country.iso3', value: 'MMR' },
-            { field: 'country.iso3', value: 'SYR' },
-            { field: 'country.iso3', value: 'PSE' },
-            { field: 'country.iso3', value: 'HTI' },
-            { field: 'country.iso3', value: 'ETH' },
-            { field: 'country.iso3', value: 'COD' },
-            { field: 'country.iso3', value: 'MLI' },
-            { field: 'country.iso3', value: 'LBN' },
-            { field: 'country.iso3', value: 'IRQ' },
-          ]
+          field: 'country',
+          value: [
+            'Ukraine', 'Sudan', 'Yemen', 'Myanmar', 'Syria',
+            'Palestinian Territory', 'Haiti', 'Ethiopia',
+            'Democratic Republic of the Congo', 'Mali', 'Lebanon', 'Iraq'
+          ],
+          operator: 'OR'
         }
       };
 
@@ -135,7 +127,7 @@ class ReliefWebService {
         return {
           id: 'rw_' + item.id,
           title: f.title || 'Rapor',
-          url: f.url || ('https://reliefweb.int/node/' + item.id),
+          url: f.url_alias || ('https://reliefweb.int/node/' + item.id),
           source: (f.source && f.source[0]) ? f.source[0].name : 'ReliefWeb',
           publishedAt: (f.date && f.date.created) ? f.date.created : new Date().toISOString(),
           lat: coords ? coords.lat + jitter() : null,
