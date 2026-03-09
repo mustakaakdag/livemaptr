@@ -411,54 +411,8 @@ const EVENT_ICONS = {
 
 // ── Dinamik Olay Akışı Üretici ─────────────────────────────────────────────────
 function generateRecentEvents(conflicts) {
-  const events = [];
-  const now = Date.now();
-
-  const templates = [
-    { type: 'missile',    conf: 'ukraine',    region: 'Ukrayna', text: 'Kharkiv\'e füze saldırısı rapor edildi',         severity: 'yuksek' },
-    { type: 'airstrike',  conf: 'ukraine',    region: 'Ukrayna', text: 'Zaporizhzhia cephesinde yoğun topçu atışı',      severity: 'kritik' },
-    { type: 'airstrike',  conf: 'gaza',       region: 'Gazze',   text: 'Kuzey Gazze\'de hava saldırısı',                 severity: 'kritik' },
-    { type: 'ground',     conf: 'gaza',       region: 'Gazze',   text: 'Han Yunus\'ta kara harekâtı devam ediyor',       severity: 'kritik' },
-    { type: 'missile',    conf: 'yemen',      region: 'Yemen',   text: 'Husiler Kızıldeniz\'de ticaret gemisini hedef aldı', severity: 'yuksek' },
-    { type: 'explosion',  conf: 'sudan',      region: 'Sudan',   text: 'Hartum\'da RSF saldırısı',                        severity: 'yuksek' },
-    { type: 'ground',     conf: 'myanmar',    region: 'Myanmar', text: 'Sagaing\'de PDF kuvvetleri askeri mevzi ele geçirdi', severity: 'orta' },
-    { type: 'political',  conf: 'syria',      region: 'Suriye',  text: 'HTS yönetimi yeni anayasa taslağı açıkladı',     severity: 'dusuk' },
-    { type: 'humanitarian',conf: 'drcongo',  region: 'Kongo',   text: 'Goma\'da insani yardım koridoru kapatıldı',      severity: 'yuksek' },
-    { type: 'drone',      conf: 'iran_israel',region: 'Lübnan',  text: 'İsrail Beyrut\'a yakın Hizbullah silah deposunu vurdu', severity: 'kritik' },
-    { type: 'explosion',  conf: 'sahel',      region: 'Burkina', text: 'Ouagadougou yakınında JNIM saldırısı',            severity: 'orta' },
-    { type: 'airstrike',  conf: 'ukraine',    region: 'Ukrayna', text: 'Kyiv hava savunma sistemi saldırıyı önledi',     severity: 'orta' },
-    { type: 'missile',    conf: 'iran_israel',region: 'İran',    text: 'İran balistik füze tatbikatı — 200+ füze ateşlendi',   severity: 'kritik' },
-    { type: 'naval',      conf: 'gulf_nuclear',region: 'Hürmüz', text: 'IRGC deniz kuvvetleri Hürmüz Boğazı\'nda tanker durdurdu', severity: 'kritik' },
-    { type: 'political',  conf: 'gulf_nuclear',region: 'Viyana',  text: 'IAEA: İran nükleer denetimlerine erişim engellendi',        severity: 'yuksek' },
-    { type: 'political',  conf: 'iran_israel',region: 'Washington',text: 'ABD: İran\'a karşı tüm askeri seçenekler masada',          severity: 'yuksek' },
-    { type: 'ground',     conf: 'drcongo',    region: 'Kongo',   text: 'M23 Kuzey Kivu\'da yeni köy ele geçirdi',        severity: 'kritik' },
-    { type: 'humanitarian',conf: 'gaza',      region: 'Gazze',   text: 'Refah sınır kapısı insani yardıma açıldı',       severity: 'dusuk' },
-    { type: 'naval',      conf: 'yemen',      region: 'Kızıldeniz', text: 'ABD deniz kuvvetleri Husi gemisini durdurdu', severity: 'orta' },
-    { type: 'political',  conf: 'ukraine',    region: 'Brüksel', text: 'NATO Ukrayna\'ya yeni silah yardımı paketini onayladı', severity: 'orta' },
-    { type: 'explosion',  conf: 'haiti',      region: 'Haiti',   text: 'Port-au-Prince\'te çete çatışması: 12 ölü',      severity: 'yuksek' },
-    { type: 'ground',     conf: 'myanmar',    region: 'Myanmar', text: 'KIA ve cunta kuvvetleri Kachin\'de çatıştı',     severity: 'orta' },
-    { type: 'airstrike',  conf: 'sudan',      region: 'Darfur',  text: 'RSF Darfur\'da sivil bölgeyi bombaladı',         severity: 'kritik' },
-  ];
-
-  // Son 12 saate yayılmış rastgele olaylar
-  templates.forEach((t, i) => {
-    const minsAgo = Math.floor(Math.random() * 720 + i * 20);
-    events.push({
-      id: `ev_${Date.now()}_${i}`,
-      type: t.type,
-      conflictId: t.conf,
-      region: t.region,
-      text: t.text,
-      severity: t.severity,
-      icon: EVENT_ICONS[t.type] || '📍',
-      timestamp: new Date(now - minsAgo * 60000).toISOString(),
-      minsAgo,
-    });
-  });
-
-  // Tarihe göre sırala (en yeni üstte)
-  events.sort((a, b) => a.minsAgo - b.minsAgo);
-  return events;
+  // Sahte event üretimi kaldirildi - gercek veriler RSS/NewsAPI'den geliyor
+  return [];
 }
 
 // ── Global İstatistikler ────────────────────────────────────────────────────────

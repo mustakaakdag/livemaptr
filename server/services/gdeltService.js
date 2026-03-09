@@ -1,67 +1,82 @@
 /**
- * GDELT Project API — LiveMapTR v3.9
- * Ücretsiz, key gerektirmez, gerçek zamanlı global olay verisi
- * https://api.gdeltproject.org
+ * ReliefWeb API — LiveMapTR
+ * BM resmi insani kriz verisi, ucretsiz, key yok
+ * https://api.reliefweb.int/v1
  */
 const https = require('https');
 const logger = require('../utils/logger');
 
-const CACHE_TTL = 10 * 60 * 1000; // 10 dakika
+const CACHE_TTL = 20 * 60 * 1000;
 
-// Çatışma keyword → conflict ID eşleştirmesi
-const CONFLICT_KEYWORDS = {
-  iran_israel: ['israel','iran','hezbollah','lebanon','tel aviv','beirut','idf','irgc','hamas','netanyahu'],
-  gaza: ['gaza','rafah','west bank','palestine','hamas','khan younis'],
-  ukraine: ['ukraine','russia','kyiv','zelensky','putin','kharkiv','mariupol','donbas','zaporizhzhia'],
-  gulf_nuclear: ['hormuz','persian gulf','saudi arabia','nuclear iran','iaea iran'],
-  sudan: ['sudan','khartoum','darfur','rsf','rapid support'],
-  drcongo: ['congo','goma','m23','kinshasa','kivu'],
-  yemen: ['yemen','houthi','sanaa','aden','hodeidah'],
-  myanmar: ['myanmar','burma','naypyidaw','junta','tatmadaw'],
-  sahel: ['mali','burkina faso','niger','sahel','ouagadougou'],
-  haiti: ['haiti','port-au-prince','gang'],
+const CONFLICT_COORDS = {
+  iran_israel:  { lat: 31.5,  lng: 34.8  },
+  gaza:         { lat: 31.35, lng: 34.3  },
+  ukraine:      { lat: 48.5,  lng: 31.2  },
+  gulf_nuclear: { lat: 25.3,  lng: 55.4  },
+  sudan:        { lat: 15.5,  lng: 32.5  },
+  drcongo:      { lat: -4.3,  lng: 15.3  },
+  yemen:        { lat: 15.3,  lng: 44.2  },
+  myanmar:      { lat: 19.7,  lng: 96.1  },
+  sahel:        { lat: 13.5,  lng: -2.1  },
+  haiti:        { lat: 18.9,  lng: -72.3 },
+  syria:        { lat: 34.8,  lng: 38.9  },
+  ethiopia:     { lat: 9.1,   lng: 40.5  },
 };
 
-// Olay tipi kategorileri
-const EVENT_CATS = {
-  14: { label: 'Protesto', severity: 'low' },
-  15: { label: 'Protesto', severity: 'low' },
-  17: { label: 'Siddete Basvurma', severity: 'medium' },
-  18: { label: 'Saldiri', severity: 'high' },
-  19: { label: 'Catisma', severity: 'high' },
-  20: { label: 'Toplu Siddet', severity: 'critical' },
+const COUNTRY_MAP = {
+  'Israel':         'iran_israel',
+  'Palestinian Territory': 'gaza',
+  'Lebanon':        'iran_israel',
+  'Iran':           'iran_israel',
+  'Ukraine':        'ukraine',
+  'Sudan':          'sudan',
+  'Democratic Republic of the Congo': 'drcongo',
+  'Yemen':          'yemen',
+  'Myanmar':        'myanmar',
+  'Mali':           'sahel',
+  'Burkina Faso':   'sahel',
+  'Niger':          'sahel',
+  'Haiti':          'haiti',
+  'Syria':          'syria',
+  'Ethiopia':       'ethiopia',
+  'Saudi Arabia':   'gulf_nuclear',
 };
 
-function httpsGet(url) {
+function post(path, body) {
   return new Promise((resolve, reject) => {
-    https.get(url, { headers: { 'User-Agent': 'LiveMapTR/3.9' } }, (res) => {
+    const data = JSON.stringify(body);
+    const opts = {
+      hostname: 'api.reliefweb.int',
+      path,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'LiveMapTR/3.9 (contact@livemaptr.com)',
+        'Content-Length': Buffer.byteLength(data),
+      }
+    };
+    const req = https.request(opts, res => {
       let d = '';
       res.on('data', c => d += c);
       res.on('end', () => {
         try { resolve(JSON.parse(d)); }
-        catch(e) { reject(new Error('JSON parse error: ' + d.substring(0,100))); }
+        catch(e) { reject(new Error('Parse error: ' + d.substring(0,100))); }
       });
-    }).on('error', reject);
+    });
+    req.on('error', reject);
+    req.write(data);
+    req.end();
   });
 }
 
-function detectConflict(title) {
-  if (!title) return null;
-  const t = title.toLowerCase();
-  for (const [id, keywords] of Object.entries(CONFLICT_KEYWORDS)) {
-    if (keywords.some(kw => t.includes(kw))) return id;
-  }
-  return null;
-}
-
-class GdeltService {
+class ReliefWebService {
   constructor() {
     this._events = [];
     this._lastFetch = 0;
     this._fetchPromise = null;
   }
 
-  async fetchEvents(delay=0) {
+  async fetchEvents(delay = 0) {
     if (Date.now() - this._lastFetch < CACHE_TTL && this._events.length) {
       return this._events;
     }
@@ -73,102 +88,99 @@ class GdeltService {
 
   async _doFetch() {
     try {
-      logger.info('GDELT: Olaylar cekiliyor...');
+      logger.info('ReliefWeb: Haberler cekiliyor...');
 
-      // GDELT Event DB API — koordinatlı olay verisi
-      // Format: YYYYMMDD
-      const now = new Date();
-      const pad = n => String(n).padStart(2,'0');
-      const dateStr = `${now.getUTCFullYear()}${pad(now.getUTCMonth()+1)}${pad(now.getUTCDate())}`;
-      const url = `https://api.gdeltproject.org/api/v2/tv/tv?query=conflict%20war%20attack&mode=timelinevol&format=json&dateres=day&startdatetime=${dateStr}000000&enddatetime=${dateStr}235959&maxrecords=50`;
-
-      // EventDB CSV'den koordinatlı veri cek - simge JSON endpoint
-      const geoUrl = `http://data.gdeltproject.org/gdeltv2/${dateStr}000000.export.CSV.zip`;
-
-      // Alternatif: GDELT GKG ile konum bazlı
-      const eventUrl = `https://api.gdeltproject.org/api/v2/doc/doc?query=airstrike&mode=artlist&maxrecords=50&format=json&sort=DateDesc`;
-      const data = await httpsGet(eventUrl);
-      const articles = data.articles || [];
-      logger.info(`GDELT: ${articles.length} makale alindi`);
-
-      // Conflict bölgelerine gore manuel koordinat ata
-      const conflictCoords = {
-        iran_israel: { lat: 31.5, lng: 34.8 },
-        gaza:        { lat: 31.35, lng: 34.3 },
-        ukraine:     { lat: 48.5, lng: 31.2 },
-        gulf_nuclear:{ lat: 25.3, lng: 55.4 },
-        sudan:       { lat: 15.5, lng: 32.5 },
-        drcongo:     { lat: -4.3, lng: 15.3 },
-        yemen:       { lat: 15.3, lng: 44.2 },
-        myanmar:     { lat: 19.7, lng: 96.1 },
-        sahel:       { lat: 13.5, lng: -2.1 },
-        haiti:       { lat: 18.9, lng: -72.3 },
-        syria:       { lat: 34.8, lng: 38.9 },
-        ethiopia:    { lat: 9.1, lng: 40.5 },
+      const body = {
+        limit: 100,
+        sort: ['date:desc'],
+        fields: {
+          include: ['title', 'date', 'source', 'country', 'disaster_type', 'url', 'status']
+        },
+        filter: {
+          operator: 'AND',
+          conditions: [
+            { field: 'status', value: 'published' },
+            {
+              operator: 'OR',
+              conditions: [
+                { field: 'disaster_type.name', value: 'Complex Emergency' },
+                { field: 'disaster_type.name', value: 'Armed Conflict' },
+                { field: 'disaster_type.name', value: 'Civil Unrest' },
+                { field: 'country.name', value: 'Ukraine' },
+                { field: 'country.name', value: 'Sudan' },
+                { field: 'country.name', value: 'Yemen' },
+                { field: 'country.name', value: 'Myanmar' },
+                { field: 'country.name', value: 'Syrian Arab Republic' },
+                { field: 'country.name', value: 'Palestinian Territory' },
+                { field: 'country.name', value: 'Haiti' },
+                { field: 'country.name', value: 'Ethiopia' },
+                { field: 'country.name', value: 'Democratic Republic of the Congo' },
+              ]
+            }
+          ]
+        }
       };
 
-      this._events = articles
-        .filter(a => a.title && a.url)
-        .map((a, i) => {
-          const conflictId = detectConflict(a.title + ' ' + (a.sourcecountry || ''));
-          const coords = conflictId ? conflictCoords[conflictId] : null;
-          // Kucuk rastgele offset ekle - ayni noktaya yigilmasin
-          const jitter = () => (Math.random() - 0.5) * 1.5;
-          return {
-            id: 'gdelt_' + i + '_' + Date.now(),
-            title: a.title,
-            url: a.url,
-            source: a.domain || 'GDELT',
-            publishedAt: a.seendate || new Date().toISOString(),
-            lat: coords ? coords.lat + jitter() : null,
-            lng: coords ? coords.lng + jitter() : null,
-            country: a.sourcecountry || '',
-            tone: parseFloat(a.tone) || 0,
-            conflictId,
-            severity: (a.tone || 0) < -5 ? 'critical' : (a.tone || 0) < -2 ? 'high' : 'medium',
-            type: 'gdelt',
-          };
-        })
-        .filter(e => e.lat && e.lng && e.conflictId);
+      const data = await post('/v1/reports?appname=livemaptr', body);
+      const items = (data.data || []);
+      logger.info(`ReliefWeb: ${items.length} rapor alindi`);
+
+      const jitter = () => (Math.random() - 0.5) * 1.2;
+
+      this._events = items.map((item, i) => {
+        const f = item.fields || {};
+        const countryName = (f.country && f.country[0]) ? f.country[0].name : '';
+        const conflictId = COUNTRY_MAP[countryName] || null;
+        const coords = conflictId ? CONFLICT_COORDS[conflictId] : null;
+        return {
+          id: 'rw_' + item.id,
+          title: f.title || 'Rapor',
+          url: f.url || ('https://reliefweb.int/node/' + item.id),
+          source: (f.source && f.source[0]) ? f.source[0].name : 'ReliefWeb',
+          publishedAt: (f.date && f.date.created) ? f.date.created : new Date().toISOString(),
+          lat: coords ? coords.lat + jitter() : null,
+          lng: coords ? coords.lng + jitter() : null,
+          country: countryName,
+          conflictId,
+          severity: 'high',
+          type: 'reliefweb',
+          isBreaking: false,
+          credibilityScore: 95,
+        };
+      }).filter(e => e.lat && e.lng && e.conflictId);
 
       this._lastFetch = Date.now();
-      logger.info(`GDELT: ${this._events.length} olay islendi`);
+      logger.info(`ReliefWeb: ${this._events.length} olay islendi`);
       return this._events;
 
     } catch(err) {
-      logger.warn('GDELT fetch hatasi: ' + err.message);
-      return this._events; // cache dön
+      logger.warn('ReliefWeb fetch hatasi: ' + err.message);
+      return this._events;
     }
   }
 
   getMapMarkers() {
-    return this._events
-      .filter(e => e.lat && e.lng)
-      .map(e => ({
-        id: e.id,
-        lat: e.lat,
-        lng: e.lng,
-        title: e.title,
-        source: e.source,
-        url: e.url,
-        publishedAt: e.publishedAt,
-        severity: e.severity,
-        conflictId: e.conflictId,
-        tone: e.tone,
-        type: 'gdelt',
-        isBreaking: e.tone < -5,
-        credibilityScore: 70,
-      }));
+    return this._events.map(e => ({
+      id: e.id,
+      lat: e.lat,
+      lng: e.lng,
+      title: e.title,
+      source: e.source,
+      url: e.url,
+      publishedAt: e.publishedAt,
+      severity: e.severity,
+      conflictId: e.conflictId,
+      type: e.type,
+      credibilityScore: e.credibilityScore,
+    }));
   }
 
   getByConflict(conflictId) {
-    return this._events
-      .filter(e => e.conflictId === conflictId)
-      .slice(0, 15);
+    return this._events.filter(e => e.conflictId === conflictId).slice(0, 15);
   }
 
   getLatest(limit = 30) {
-    return this._events
+    return [...this._events]
       .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
       .slice(0, limit);
   }
@@ -177,11 +189,10 @@ class GdeltService {
     return {
       total: this._events.length,
       withLocation: this._events.filter(e => e.lat && e.lng).length,
-      critical: this._events.filter(e => e.severity === 'critical').length,
       lastUpdate: this._lastFetch ? new Date(this._lastFetch).toISOString() : null,
-      source: 'GDELT',
+      source: 'ReliefWeb (UN)',
     };
   }
 }
 
-module.exports = new GdeltService();
+module.exports = new ReliefWebService();

@@ -627,7 +627,7 @@ function esc(s){const d=document.createElement('div');d.textContent=s||'';return
 function rel(iso){if(!iso)return'—';const m=(Date.now()-new Date(iso))/60000;if(m<1)return'simdi';if(m<60)return Math.floor(m)+' dk';if(m<1440)return Math.floor(m/60)+' sa';return Math.floor(m/1440)+' gun';}
 function toast(msg,t,dur){dur=dur||3000;const el=document.createElement('div');el.className='toast'+(t==='red'?' red':t==='green'?' green':'');el.innerHTML='<span>'+(t==='red'?'!':t==='green'?'OK':'i')+'</span><span>'+esc(msg)+'</span>';document.getElementById('toasts').prepend(el);setTimeout(()=>{el.style.opacity='0';el.style.transition='.3s';setTimeout(()=>el.remove(),300);},dur);}
 
-const S={conflicts:[],events:[],news:[],newsMarkers:[],sel:null,map:null,cluster:null,cfM:new Map(),hsM:[],newsM:new Map(),mf:'all',tab:'all',feedCol:false};
+const S={conflicts:[],events:[],news:[],newsMarkers:[],sel:null,map:null,cluster:null,cfM:new Map(),hsM:[],newsM:new Map(),gdeltM:[],mf:'all',tab:'all',feedCol:false};
 
 // Saat
 setInterval(()=>{document.getElementById('clock').textContent=new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});},1000);
@@ -868,7 +868,7 @@ function initSocket(){
     if(d.naMarkers&&d.naMarkers.length){ addNewsMarkers(d.naMarkers); applyFilter(); }
     toast(d.conflictNews.length+' uluslararasi haber guncellendi','green',2500);
   });
-  s.on('acled_updated',d=>{
+  s.on('gdelt_updated',d=>{
     if(d.markers&&d.markers.length){
       addAcledMarkers(d.markers);
       const st=d.stats||{};
@@ -1312,13 +1312,17 @@ async function loadNewsApi() {
 
 
 // ═══ ACLED MARKERS ═══════════════════════════════════════════
-S.acledM = [];
-function addGdeltMarkers(events){
-  // Eskilerı temizle
-  S.acledM.forEach(m=>S.map.removeLayer(m));
-  S.acledM=[];
-  events.forEach(e=>{
-    if(isNaN(e.lat)||isNaN(e.lng)) return;
+S.gdeltM = [];
+function updateGdeltStats(stats){
+  // İleride istatistik gösterim için
+  if(stats && stats.total) console.log('ReliefWeb stats:', stats);
+}
+function addGdeltMarkers(markers){
+  S.gdeltM.forEach(m=>S.map.removeLayer(m));
+  S.gdeltM=[];
+  if(!markers||!markers.length) return;
+  markers.forEach(e=>{
+    if(!e.lat||!e.lng||isNaN(e.lat)||isNaN(e.lng)) return;
     const col = e.severity==='critical'?'#ef4444':e.severity==='high'?'#f97316':e.severity==='medium'?'#f59e0b':'#6b7280';
     const sz  = e.fatalities>=50?20:e.fatalities>=10?16:e.fatalities>=1?13:10;
     const ico = L.divIcon({
@@ -1333,19 +1337,20 @@ function addGdeltMarkers(events){
       '<div class="mpop-meta">Kayıp: '+(e.fatalities||0)+' · '+esc(e.date)+' · '+esc(e.country)+'</div></div>');
     m.on('click',()=>{ if(e.conflictId){ const cf=S.conflicts.find(x=>x.id===e.conflictId); if(cf) selConflict(cf); } });
     S.map.addLayer(m);
-    S.acledM.push(m);
+    S.gdeltM.push(m);
   });
 }
 
 async function loadGdelt(){
   try{
-    const res=await fetch('/api/acled/events?limit=300');
+    const res=await fetch('/api/gdelt/events');
     const j=await res.json();
-    if(j.ok&&j.data&&j.data.length){
-      addAcledMarkers(j.data);
-      toast('ACLED: '+j.data.length+' gercek olay yuklendi','green',3000);
+    const markers = j.markers || [];
+    if(markers.length){
+      addGdeltMarkers(markers);
+      toast('ReliefWeb: '+markers.length+' BM raporu yuklendi','green',3000);
     }
-  }catch(e){ console.warn('ACLED load:',e); }
+  }catch(e){ console.warn('ReliefWeb load:',e); }
 }
 
 
@@ -1429,12 +1434,7 @@ function copyLink(){
   closeShare();
 }
 
-// Detay paneli açılınca mobilde sekmeye geç
-const _origRenderDetail = renderDetail;
-function renderDetail(c){
-  _origRenderDetail(c);
-  if(window.innerWidth<=768) mobTab('detail');
-}
+// Detay paneli açılınca mobilde sekmeye geç - initDomListeners'da override edilecek
 
 
 function initDomListeners(){
@@ -1466,11 +1466,31 @@ function initDomListeners(){
     document.getElementById('feed').classList.toggle('collapsed',S.feedCol);
     document.getElementById('feed-tog').textContent=S.feedCol?'GENISLET':'KUCULT';
   });
-  // List tabs -> initDomListeners
-  // Map filters -> initDomListeners
+  // Mobil renderDetail override
+  const _origRD = renderDetail;
+  window.renderDetail = function(c){ _origRD(c); if(window.innerWidth<=768) mobTab('detail'); };
+
+  // List tabs
+  document.querySelectorAll('.pltab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.pltab').forEach(x => x.classList.remove('on'));
+      t.classList.add('on');
+      S.tab = t.dataset.tab;
+      renderList(S.conflicts);
+    });
+  });
+  // Map filters (Katmanlar)
+  document.querySelectorAll('.mfb').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.mfb').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      S.mf = b.dataset.mf;
+      applyFilter();
+    });
+  });
 }
 // START
-waitL(()=>{initDomListeners();initMap();initSocket();loadAll();loadNewsApi();loadGdelt();initRiskPulse();startAlarmLoop();});
+waitL(()=>{initDomListeners();initMap();initSocket();loadAll();loadNewsApi();loadGdelt();initRiskPulse();});
 </script>
 
 <!-- MOBİL NAV -->
