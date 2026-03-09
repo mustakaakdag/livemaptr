@@ -19,6 +19,7 @@
 <meta name="theme-color" content="#030508"/>
 <link rel="canonical" href="https://livemaptr.com"/>
 <link rel="manifest" href="/manifest.json"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23030508'/><circle cx='16' cy='16' r='10' fill='none' stroke='%23ef4444' stroke-width='2'/><circle cx='16' cy='16' r='3' fill='%23ef4444'/><line x1='16' y1='2' x2='16' y2='8' stroke='%23ef4444' stroke-width='1.5'/><line x1='16' y1='24' x2='16' y2='30' stroke='%23ef4444' stroke-width='1.5'/><line x1='2' y1='16' x2='8' y2='16' stroke='%23ef4444' stroke-width='1.5'/><line x1='24' y1='16' x2='30' y2='16' stroke='%23ef4444' stroke-width='1.5'/></svg>"/>
 <link rel="apple-touch-icon" href="/icon-192.png"/>
 <link rel="stylesheet" href="/lib/leaflet/leaflet.css" onerror="this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'"/>
 <link rel="stylesheet" href="/lib/markercluster/MarkerCluster.Default.css" onerror="this.href='https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css'"/>
@@ -520,13 +521,13 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 <header id="hdr">
   <div class="hs">
     <div class="live-pill">CANLI</div>
-    <div><div class="logo-name">LiveMapTR</div><div class="logo-sub">Global Catisma Merkezi</div></div>
+    <div><div class="logo-name">LiveMapTR</div><div class="logo-sub">Global Çatışma Merkezi</div></div>
   </div>
   <div class="hdr-chips">
-    <div class="chip"><div class="chip-val cv-red" id="sc-aktif">—</div><div class="chip-lbl">Aktif Catisma</div></div>
-    <div class="chip"><div class="chip-val cv-orange" id="sc-kritik">—</div><div class="chip-lbl">Kritik Bolge</div></div>
-    <div class="chip"><div class="chip-val cv-amber" id="sc-olaylar">—</div><div class="chip-lbl">Bugunun Olaylari</div></div>
-    <div class="chip"><div class="chip-val cv-txt" id="sc-gocmen" style="font-size:14px">—</div><div class="chip-lbl">Toplam Gocmen</div></div>
+    <div class="chip"><div class="chip-val cv-red" id="sc-aktif">—</div><div class="chip-lbl">Aktif Çatışma</div></div>
+    <div class="chip"><div class="chip-val cv-orange" id="sc-kritik">—</div><div class="chip-lbl">Kritik Bölge</div></div>
+    <div class="chip"><div class="chip-val cv-amber" id="sc-olaylar">—</div><div class="chip-lbl">Bugünün Olayları</div></div>
+    <div class="chip"><div class="chip-val cv-txt" id="sc-gocmen" style="font-size:14px">—</div><div class="chip-lbl">Yerinden Edilmiş</div></div>
     <div class="chip" style="border-right:none"><div class="chip-val cv-green" id="sc-haber">—</div><div class="chip-lbl">Aktif Haber</div></div>
   </div>
   <div class="ticker-wrap">
@@ -535,7 +536,11 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   </div>
   <div class="hdr-right">
     <div class="conn-wrap"><div class="cdot" id="cdot"></div><span id="ctxt">...</span></div>
-    <div class="hdr-clock" id="clock">--:--:--</div>
+    <div class="conn-wrap" style="padding:0 6px;border-left:1px solid var(--border);border-right:1px solid var(--border);height:100%;gap:5px;margin-right:4px"><span style="font-size:9px">👁</span><span id="viewer-count" style="font-family:var(--mono);font-size:11px;color:var(--green)">—</span><span style="font-size:9px;color:var(--txt4)">izliyor</span></div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:1px">
+      <div class="hdr-clock" id="clock">--:--:--</div>
+      <div style="font-family:var(--mono);font-size:8px;color:var(--txt4);letter-spacing:.5px" id="last-update">GÜNCELLENİYOR...</div>
+    </div>
     <button id="share-btn" title="Paylaş">🔗 PAYLAŞ</button>
     <button id="sound-btn" title="Alarm Sesi">🔇 SES</button>
     <button class="hdr-btn" id="btn-ref">YENILE</button>
@@ -547,31 +552,31 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
     <aside id="pl">
       <div class="pl-hdr">
-        <div class="pl-title">Aktif Catismalar</div>
+        <div class="pl-title">Aktif Çatışmalar</div>
         <span style="font-family:var(--mono);font-size:10px;color:var(--txt3)" id="cf-badge">—</span>
       </div>
       <div class="pl-tabs">
-        <button class="pltab on" data-tab="all">TUMU</button>
-        <button class="pltab" data-tab="aktif">AKTIF</button>
-        <button class="pltab" data-tab="izleme">IZLEME</button>
-        <button class="pltab" data-tab="donmus">DONMUS</button>
+        <button class="pltab on" data-tab="all">TÜMÜ</button>
+        <button class="pltab" data-tab="aktif">AKTİF</button>
+        <button class="pltab" data-tab="izleme">İZLEME</button>
+        <button class="pltab" data-tab="donmus">DONMUŞ</button>
       </div>
-      <div id="cf-list"><div class="ld"><div class="ldspin"></div>YUKLENIYOR</div></div>
+      <div id="cf-list"><div class="ld"><div class="ldspin"></div>YÜKLENİYOR</div></div>
     </aside>
 
     <main id="map-area">
       <div id="map"></div>
       <div class="mo-tl">
         <div class="mfrow">
-          <button class="mfb on" data-mf="all">TUM KATMANLAR</button>
-          <button class="mfb" data-mf="conflicts">CATISMA</button>
+          <button class="mfb on" data-mf="all">TÜM KATMANLAR</button>
+          <button class="mfb" data-mf="conflicts">ÇATIŞMA</button>
           <button class="mfb" data-mf="events">OLAYLAR</button>
           <button class="mfb" data-mf="news">HABERLER</button>
         </div>
       </div>
       <div class="mo-tr">
-        <div class="msc"><div class="ms-lbl">EN YUKSEK RISK</div><div class="ms-val red" id="ms-risk" style="font-size:14px;font-family:var(--cond)">—</div><div class="ms-sub" id="ms-riskscore">—</div></div>
-        <div class="msc"><div class="ms-lbl">HABER MARKERI</div><div class="ms-val green" id="ms-hnews">0</div><div class="ms-sub">lokasyon tespit</div></div>
+        <div class="msc"><div class="ms-lbl">EN YÜKSEK RİSK</div><div class="ms-val red" id="ms-risk" style="font-size:14px;font-family:var(--cond)">—</div><div class="ms-sub" id="ms-riskscore">—</div></div>
+        <div class="msc"><div class="ms-lbl">HABER MARKERİ</div><div class="ms-val green" id="ms-hnews">0</div><div class="ms-sub">lokasyon tespit</div></div>
       </div>
       <div class="mo-bl">
         <div class="leg-t">RİSK SEVİYESİ</div>
@@ -585,7 +590,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </main>
 
     <aside id="pr">
-      <div id="d-empty"><div class="de-icon">🎯</div><div class="de-txt">Haritadan veya<br>listeden bir catisma secin</div></div>
+      <div id="d-empty"><div class="de-icon">🎯</div><div class="de-txt">Haritadan veya<br>listeden bir çatışma seçin</div></div>
       <div id="d-content"></div>
     </aside>
   </div>
@@ -606,7 +611,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
   <div id="feed">
     <div class="fb-hdr" id="feed-hdr">
-      <div class="fb-title"><div class="fb-dot"></div>CANLI OLAY AKISI</div>
+      <div class="fb-title"><div class="fb-dot"></div>CANLI OLAY AKIŞI</div>
       <div class="fb-r"><span class="fb-cnt" id="feed-cnt">0 olay</span><span class="fb-tog" id="feed-tog">▼ KUCULT</span></div>
     </div>
     <div id="feed-list"><div class="ld" style="width:200px"><div class="ldspin"></div></div></div>
@@ -661,7 +666,7 @@ function renderList(conflicts){
     <div class="cfc int-${c.intensity}${S.sel&&S.sel.id===c.id?' sel':''}" data-id="${esc(c.id)}">
       <div class="cf-top">
         <div class="cf-fn"><span class="cf-flag">${esc(c.flag)}</span><div><div class="cf-nm">${esc(c.name)}</div><div class="cf-rg">${esc(c.region)}</div></div></div>
-        <div class="cf-sc" style="color:${esc(c.riskColor||'#6b7280')}">${c.riskScore}</div>
+        <div class="cf-sc-wrap"><div class="cf-sc" style="color:${esc(c.riskColor||'#6b7280')}">${c.riskScore}</div><div style="font-family:var(--mono);font-size:9px;color:${c.riskScore>=75?'var(--red)':c.riskScore>=50?'var(--orange)':'var(--green)'}">${c.riskScore>=75?'▲ YÜKSEK':c.riskScore>=50?'▲ ORTA':'● STABIL'}</div></div>
       </div>
       <div class="cf-bot">
         <span class="cbadge st-${c.status}">${stLbl[c.status]||c.status}</span>
@@ -848,17 +853,19 @@ async function loadAll(){
     }
     if(stR.basari&&stR.veri)renderStats(stR.veri,nc);
     applyFilter();
+  const lu=document.getElementById('last-update');
+  if(lu) lu.textContent='GÜN: '+new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
   }catch(e){
     console.error(e);
-    toast('Veri yukleme hatasi: '+e.message,'red',5000);
+    toast('Veri yükleme hatası: '+e.message,'red',5000);
   }
 }
 
 // SOCKET
 function initSocket(){
   const s=io({transports:['websocket','polling']});
-  s.on('connect',()=>{document.getElementById('cdot').className='cdot ok';document.getElementById('ctxt').textContent='BAGLI';toast('Sunucuya baglandi','green',2000);});
-  s.on('disconnect',()=>{document.getElementById('cdot').className='cdot err';document.getElementById('ctxt').textContent='KESİLDİ';toast('Baglanti kesildi','red',4000);});
+  s.on('connect',()=>{document.getElementById('cdot').className='cdot ok';document.getElementById('ctxt').textContent='BAĞLI';toast('Sunucuya bağlandı','green',2000);});
+  s.on('disconnect',()=>{document.getElementById('cdot').className='cdot err';document.getElementById('ctxt').textContent='KESİLDİ';toast('Bağlantı kesildi','red',4000);});
   s.on('haberler_guncellendi',d=>{
     if(d.markers){addNewsMarkers(d.markers);applyFilter();}
     document.getElementById('sc-haber').textContent=(d.haberler||[]).length||'—';
@@ -870,9 +877,8 @@ function initSocket(){
   });
   s.on('gdelt_updated',d=>{
     if(d.markers&&d.markers.length){
-      addAcledMarkers(d.markers);
-      const st=d.stats||{};
-      toast('ACLED: '+d.markers.length+' gercek olay guncellendi','green',3000);
+      addGdeltMarkers(d.markers);
+      toast(d.markers.length+' olay güncellendi','green',3000);
     }
   });
   s.on('initial_data',d=>{
@@ -1342,15 +1348,23 @@ function addGdeltMarkers(markers){
 }
 
 async function loadGdelt(){
+  // ReliefWeb kaldırıldı - NewsAPI haberleri marker olarak ekleniyor
   try{
-    const res=await fetch('/api/gdelt/events');
+    const res=await fetch('/api/newsapi/latest');
     const j=await res.json();
-    const markers = j.markers || [];
+    const articles = j.data||[];
+    const markers = articles.filter(a=>a.lat&&a.lng).map(a=>({
+      id:'na_'+a.id, lat:a.lat, lng:a.lng,
+      title:a.title, source:a.source, url:a.url,
+      publishedAt:a.publishedAt, severity:a.severity||'medium',
+      conflictId:a.conflictId, type:'news', credibilityScore:a.credibilityScore||70
+    }));
     if(markers.length){
       addGdeltMarkers(markers);
-      toast('ReliefWeb: '+markers.length+' BM raporu yuklendi','green',3000);
+      document.getElementById('ms-hnews').textContent=markers.length;
+      toast(markers.length+' haber haritada gösterildi','green',2500);
     }
-  }catch(e){ console.warn('ReliefWeb load:',e); }
+  }catch(e){ console.warn('NewsAPI marker load:',e); }
 }
 
 
