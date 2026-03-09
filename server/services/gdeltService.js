@@ -61,11 +61,12 @@ class GdeltService {
     this._fetchPromise = null;
   }
 
-  async fetchEvents() {
+  async fetchEvents(delay=0) {
     if (Date.now() - this._lastFetch < CACHE_TTL && this._events.length) {
       return this._events;
     }
     if (this._fetchPromise) return this._fetchPromise;
+    if (delay) await new Promise(r => setTimeout(r, delay));
     this._fetchPromise = this._doFetch().finally(() => { this._fetchPromise = null; });
     return this._fetchPromise;
   }

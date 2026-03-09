@@ -78,7 +78,8 @@ setInterval(async () => {
 
 // ACLED — ilk fetch + periyodik guncelleme (her 15 dk)
 // GDELT — her 10 dakikada güncelle
-gdeltService.fetchEvents()
+// GDELT 15sn gecikmeli baslat (rate limit onlemek icin)
+gdeltService.fetchEvents(15000)
   .then(() => logger.info('GDELT: Ilk veri yuklendi, ' + gdeltService.getStats().total + ' olay'))
   .catch(e => logger.warn('GDELT ilk yukleme hatasi: ' + e.message));
 
