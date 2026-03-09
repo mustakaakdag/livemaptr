@@ -24,22 +24,28 @@ const CONFLICT_COORDS = {
 };
 
 const COUNTRY_MAP = {
-  'Israel':         'iran_israel',
-  'Palestinian Territory': 'gaza',
-  'Lebanon':        'iran_israel',
-  'Iran':           'iran_israel',
-  'Ukraine':        'ukraine',
-  'Sudan':          'sudan',
-  'Democratic Republic of the Congo': 'drcongo',
-  'Yemen':          'yemen',
-  'Myanmar':        'myanmar',
-  'Mali':           'sahel',
-  'Burkina Faso':   'sahel',
-  'Niger':          'sahel',
-  'Haiti':          'haiti',
-  'Syria':          'syria',
-  'Ethiopia':       'ethiopia',
-  'Saudi Arabia':   'gulf_nuclear',
+  'Israel':                            'iran_israel',
+  'Palestinian Territory':             'gaza',
+  'Palestine':                         'gaza',
+  'Lebanon':                           'iran_israel',
+  'Iran':                              'iran_israel',
+  'Iraq':                              'iran_israel',
+  'Ukraine':                           'ukraine',
+  'Sudan':                             'sudan',
+  'South Sudan':                       'sudan',
+  'Democratic Republic of the Congo':  'drcongo',
+  'Congo':                             'drcongo',
+  'Yemen':                             'yemen',
+  'Myanmar':                           'myanmar',
+  'Burma':                             'myanmar',
+  'Mali':                              'sahel',
+  'Burkina Faso':                      'sahel',
+  'Niger':                             'sahel',
+  'Haiti':                             'haiti',
+  'Syria':                             'syria',
+  'Syrian Arab Republic':              'syria',
+  'Ethiopia':                          'ethiopia',
+  'Saudi Arabia':                      'gulf_nuclear',
 };
 
 function post(path, body) {
@@ -94,29 +100,23 @@ class ReliefWebService {
         limit: 100,
         sort: ['date:desc'],
         fields: {
-          include: ['title', 'date', 'source', 'country', 'disaster_type', 'url', 'status']
+          include: ['title', 'date', 'source', 'country', 'url', 'status']
         },
         filter: {
-          operator: 'AND',
+          operator: 'OR',
           conditions: [
-            { field: 'status', value: 'published' },
-            {
-              operator: 'OR',
-              conditions: [
-                { field: 'disaster_type.name', value: 'Complex Emergency' },
-                { field: 'disaster_type.name', value: 'Armed Conflict' },
-                { field: 'disaster_type.name', value: 'Civil Unrest' },
-                { field: 'country.name', value: 'Ukraine' },
-                { field: 'country.name', value: 'Sudan' },
-                { field: 'country.name', value: 'Yemen' },
-                { field: 'country.name', value: 'Myanmar' },
-                { field: 'country.name', value: 'Syrian Arab Republic' },
-                { field: 'country.name', value: 'Palestinian Territory' },
-                { field: 'country.name', value: 'Haiti' },
-                { field: 'country.name', value: 'Ethiopia' },
-                { field: 'country.name', value: 'Democratic Republic of the Congo' },
-              ]
-            }
+            { field: 'country.iso3', value: 'UKR' },
+            { field: 'country.iso3', value: 'SDN' },
+            { field: 'country.iso3', value: 'YEM' },
+            { field: 'country.iso3', value: 'MMR' },
+            { field: 'country.iso3', value: 'SYR' },
+            { field: 'country.iso3', value: 'PSE' },
+            { field: 'country.iso3', value: 'HTI' },
+            { field: 'country.iso3', value: 'ETH' },
+            { field: 'country.iso3', value: 'COD' },
+            { field: 'country.iso3', value: 'MLI' },
+            { field: 'country.iso3', value: 'LBN' },
+            { field: 'country.iso3', value: 'IRQ' },
           ]
         }
       };
